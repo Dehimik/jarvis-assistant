@@ -1,0 +1,56 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "jarvis"
+version = "0.0.1 alfa"
+description = "Modular offline voice assistant"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [{name = "Dehimik"}]
+
+dependencies = [
+    "pydantic>=2.6",
+    "sounddevice>=0.5.0",
+    "loguru>=0.7",
+    "pyyaml>=6.0",
+    "vosk>=0.3",
+    "python-dotenv>=1.0.1"
+
+]
+
+[project.optional-dependencies]
+dev = []
+gpu = []
+whisper = []
+
+[project.scripts]
+va-daemon = "assistant.cli.main:run_daemon"
+va-cli = "assistant.cli.main:run_cli"
+
+[project.entry-points."va.plugins"]
+sys_controls = "assistant.pluginsbuiltin.sys_controls:SysControlsPlugin"
+launcher = "assistant.plugins.builtin.launcher:LauncherPlugin"
+
+[tool.hatch.build.targets.wheel]
+packages = ["assistant", "gui"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.black]
+line-length = 100
+target-version = "py310"
+
+[tool.mypy]
+python_version = "3.10"
+strict = false
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+addopts = "-q"
+pythonpath = ["."]
