@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "jarvis"
-version = "0.0.1 alfa"
+version = "0.0.1"
 description = "Modular offline voice assistant"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -19,7 +19,16 @@ dependencies = [
     "vosk>=0.3",
     "python-dotenv>=1.0.1",
     "pvporcupine>=3.0.4",
-    "pvrecorder>=1.2.7"
+    "pvrecorder>=1.2.7",
+    "rapidfuzz>=3.14.1",
+    "thefuzz>=0.22.1",
+    "fastapi>=0.118.0",
+    "uvicorn>=0.37.0",
+    "openwakeword>=0.6.0",
+    "onnxruntime>=1.23.0",
+    "numpy>=2.3.0",
+    "scipy>=1.16.0",
+    "scikit-learn>=1.7.0"
 ]
 
 [project.optional-dependencies]

@@ -2,7 +2,7 @@ import pvporcupine
 
 class WakeWordPorcupine:
     def __init__(self, access_key: str, keyword: str = "jarvis", sensitivity: float = 1.0):
-        self._ppn = pvporcupine.create(access_key=access_key, keyword_paths=[keyword])
+        self._ppn = pvporcupine.create(access_key=access_key, keyword_paths=[keyword], sensitivities=[sensitivity])
 
     @property
     def frame_length(self) -> int:

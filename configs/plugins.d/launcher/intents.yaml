@@ -1,0 +1,16 @@
+intents:
+  app.open:
+    patterns:
+      - "відкрий {app:app_name}"
+      - "запусти {app:app_name}"
+      - "open {app:app_name}"
+    slots:
+      app:
+        type: app_name
+        synonyms:
+          chromium: ["google chrome", "хром", "chrome"]
+          https://youtube.com: ["ютуб", "youtube"]
+          Telegram: ["telegram"]
+          blender: ["blender"]
+          obsidian: ["obsidian"]
+          https://roblox.com: ["roblox"]
