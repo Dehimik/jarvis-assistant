@@ -1,6 +1,6 @@
 .venv
 .idea
-.assistant.audio.models
+assistant/audio/models
 
 .env
 .gitignore

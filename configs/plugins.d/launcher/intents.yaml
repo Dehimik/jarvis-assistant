@@ -2,7 +2,9 @@ intents:
   app.open:
     patterns:
       - "відкрий {app:app_name}"
+      - "відкриє {app:app_name}"
       - "запусти {app:app_name}"
+      - "запустити {app:app_name}"
       - "open {app:app_name}"
     slots:
       app:
@@ -10,7 +12,20 @@ intents:
         synonyms:
           chromium: ["google chrome", "хром", "chrome"]
           https://youtube.com: ["ютуб", "youtube"]
-          Telegram: ["telegram"]
-          blender: ["blender"]
-          obsidian: ["obsidian"]
-          https://roblox.com: ["roblox"]
+          Telegram: ["telegram", "телеграм"]
+          blender: ["blender", "блендер"]
+          obsidian: ["obsidian", "обсидіан"]
+          https://roblox.com: ["roblox", "роблокс"]
+          https://www.youtube.com/watch?v=7D4qgR3TsRc: ["Україна понад усе"]
+  app.close:
+    patterns:
+      - "закрий {app:app_name}"
+      - "вимкни {app:app_name}"
+    slots:
+      app:
+        type: app_name
+        synonyms:
+          chromium: [ "google chrome", "хром", "chrome" ]
+          Telegram: [ "telegram", "телеграм" ]
+          blender: [ "blender", "блендер" ]
+          obsidian: [ "obsidian", "обсидіан" ]

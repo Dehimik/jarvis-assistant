@@ -1,0 +1,1 @@
+2025-10-23 20:57:01.757 | ERROR    | assistant.telemetry.log:error:136 - {'ok': False, 'error': 'no_intent'}

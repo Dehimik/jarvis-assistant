@@ -2,11 +2,11 @@ from __future__ import annotations
 from typing import Any, Dict, List, Optional, Callable
 
 from .base import Plugin
-from .builtin.launcher import LauncherPlugin
+from .builtin.launcher import LauncherPlugin, AppClosePlugin
 
 class PluginManager:
     def __init__(self, builtin: Optional[List[Plugin]] = None):
-        self.plugins: List[Plugin] = builtin or [LauncherPlugin()]
+        self.plugins: List[Plugin] = builtin or [LauncherPlugin(), AppClosePlugin()]
         self.intent_index: Dict[str, Plugin] = {}
         self._index_capabilities()
 

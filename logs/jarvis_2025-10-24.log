@@ -1,15 +1,3 @@
-2025-10-20 10:53:34.485 | ERROR    | assistant.telemetry.log:error:136 - {'ok': False, 'error': 'no_intent'}
-2025-10-20 10:54:54.910 | ERROR    | assistant.telemetry.log:error:136 - {'ok': False, 'error': 'no_intent'}
-2025-10-20 10:55:05.481 | ERROR    | assistant.telemetry.log:error:136 - {'ok': False, 'error': 'no_intent'}
-2025-10-20 11:01:19.027 | ERROR    | assistant.telemetry.log:error:136 - {'ok': False, 'intent': 'app.open', 'slots': {'app': 'Telegram'}, 'confidence': 1.0, 'action': {'ok': False, 'error': 'app_not_found', 'value': 'Telegram', 'debug': {'strategy': None, 'tried': []}}}
-2025-10-20 11:01:33.760 | ERROR    | assistant.telemetry.log:error:136 - {'ok': False, 'intent': 'app.open', 'slots': {'app': 'Telegram'}, 'confidence': 1.0, 'action': {'ok': False, 'error': 'app_not_found', 'value': 'Telegram', 'debug': {'strategy': None, 'tried': []}}}
-2025-10-20 11:02:42.240 | ERROR    | assistant.telemetry.log:error:136 - {'ok': False, 'intent': 'app.open', 'slots': {'app': 'obsidian'}, 'confidence': 1.0, 'action': {'ok': False, 'error': 'app_not_found', 'value': 'obsidian', 'debug': {'strategy': None, 'tried': []}}}
-2025-10-20 11:05:13.205 | ERROR    | assistant.telemetry.log:error:136 - {'ok': False, 'intent': 'app.open', 'slots': {'app': 'Telegram'}, 'confidence': 1.0, 'action': {'ok': False, 'error': 'app_not_found', 'value': 'Telegram', 'debug': {'strategy': None, 'tried': []}}}
-2025-10-20 11:10:41.170 | ERROR    | assistant.telemetry.log:error:136 - {'ok': False, 'intent': 'app.open', 'slots': {'app': 'Telegram'}, 'confidence': 1.0, 'action': {'ok': False, 'error': 'app_not_found', 'value': 'Telegram', 'debug': {'strategy': None, 'tried': []}}}
-2025-10-20 11:13:09.134 | ERROR    | assistant.telemetry.log:error:136 - {'ok': False, 'intent': 'app.open', 'slots': {'app': 'Telegram'}, 'confidence': 1.0, 'action': {'ok': False, 'error': 'app_not_found', 'value': 'Telegram', 'debug': {'strategy': None, 'tried': []}}}
-2025-10-20 11:19:05.741 | ERROR    | assistant.telemetry.log:error:136 - {'ok': False, 'intent': 'app.open', 'slots': {'app': 'roblox'}, 'confidence': 1.0, 'action': {'ok': False, 'error': 'app_not_found', 'value': 'roblox', 'debug': {'strategy': None, 'tried': []}}}
-2025-10-22 20:12:46.267 | ERROR    | assistant.telemetry.log:error:136 - {'ok': False, 'intent': 'app.open', 'slots': {'app': 'surprise'}, 'confidence': 1.0, 'action': {'ok': False, 'error': 'app_not_found', 'value': 'surprise', 'debug': {'strategy': None, 'tried': []}}}
-2025-10-23 20:57:01.757 | ERROR    | assistant.telemetry.log:error:136 - {'ok': False, 'error': 'no_intent'}
 2025-10-24 12:06:15.897 | ERROR    | assistant.telemetry.log:error:136 - {'ok': False, 'error': 'no_intent'}
 2025-10-24 12:06:21.860 | ERROR    | assistant.telemetry.log:error:136 - {'ok': False, 'error': 'no_intent'}
 2025-10-24 12:06:28.017 | ERROR    | assistant.telemetry.log:error:136 - {'ok': False, 'error': 'no_intent'}
