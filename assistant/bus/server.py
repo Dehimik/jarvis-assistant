@@ -13,7 +13,7 @@ class ParseIn(BaseModel):
 app = FastAPI(title="VA Bus")
 
 app.state.nlu = NLU(MANIFEST_DIRS)
-app.state.plugins = PluginManager()  # тут підключений LauncherPlugin
+app.state.plugins = PluginManager() # тут підключений LauncherPlugin
 
 @app.get("/health")
 def health():

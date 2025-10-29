@@ -1,0 +1,4 @@
+stt:
+  plugin: vosk
+  options:
+    model_path: "assistant/audio/models/vosk-model-uk-v3-lgraph"

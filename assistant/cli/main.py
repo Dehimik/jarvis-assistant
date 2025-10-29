@@ -110,7 +110,7 @@ def run_cli():
     if args.cmd == "parse":
         res = c.parse(args.text)
         if not res.get("ok"):
-            log.error(res)
+            # log.error(res)
             print("ERR:", res.get("error"))
             raise SystemExit(1)
         print(f"intent={res['intent']} slots={res['slots']} conf={res['confidence']}")
@@ -169,7 +169,6 @@ def run_cli():
             print("\nЗавершення…")
         finally:
             stt.stop()
-
 
 if __name__ == "__main__":
     run_cli()
