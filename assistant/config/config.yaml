@@ -1,0 +1,10 @@
+stt:
+  plugin: vosk-uk-v3
+  options:
+    model_path: "assistant/audio/models/vosk-model-uk-v3"
+
+tts:
+  plugin: pyttsx3
+  options:
+    rate: 160
+    voice_substr: "uk"
