@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Any, Dict
 import yaml
-from assistant.audio.stt.registry import discover as stt_discover, create as stt_create
+from assistant.audio.stt.registry import discover as stt_discover, create as stt_create, register, _registry
 from assistant.audio.tts.registry import discover as tts_discover, create as tts_create
 
 class ConfigResolver:
@@ -9,7 +9,7 @@ class ConfigResolver:
     Завантажує YAML-конфіг, підтягує плагіни з plugins.d і створює інстанси STT/TTS.
     """
 
-    def __init__(self, config_path: str | Path = "config.yaml", plugins_dir: str | Path = "assistant/configs/plugins.d"):
+    def __init__(self, config_path: str | Path = "assistant/config/config.yaml", plugins_dir: str | Path = "configs/plugins.d/voice"):
         self.config_path = Path(config_path)
         self.plugins_dir = Path(plugins_dir)
         self.cfg: Dict[str, Any] = {}
@@ -26,8 +26,8 @@ class ConfigResolver:
         options = stt_section.get("options", {})
         if not name:
             raise ValueError("Missing 'stt.plugin' in config.yaml")
-
-        stt_discover(self.plugins_dir / "stt")
+        stt_discover(self.plugins_dir)
+        print(list(_registry))
         return stt_create(name, **options)
 
     def _resolve_tts(self):
@@ -37,7 +37,7 @@ class ConfigResolver:
         if not name:
             raise ValueError("Missing 'tts.plugin' in config.yaml")
 
-        tts_discover(self.plugins_dir / "tts")
+        tts_discover(self.plugins_dir)
         return tts_create(name, **options)
 
     def resolve_all(self):

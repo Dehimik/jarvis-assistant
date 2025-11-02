@@ -1,86 +1,49 @@
+# assistant/main.py
 from __future__ import annotations
 import argparse
-import json
-import queue
 import sys
-import threading
 from typing import Optional
 
-import uvicorn
 import sounddevice as sd
-from vosk import Model, KaldiRecognizer
+import uvicorn
 
 from assistant.bus.client import BusClient
 from assistant.telemetry.log import setup_logger
 
+# наші модулі ядра
+from assistant.config.resolver import ConfigResolver
+from assistant.audio.recorder import recorder_ctx  # PvRecorder-обгортка: start/read/stop/release
+
 log = setup_logger(app_name="jarvis", level="ERROR", env="dev", serialize=False)
-
-
-# ================== AUDIO / STT ==================
-class MicSTT:
-    def __init__(self, model_path: str, samplerate: int = 44100, device: Optional[int] = None, blocksize: int = 11025):
-        """
-        samplerate: 16000 рекомендується Vosk-ом (менше латентність).
-        blocksize: 4000 ~ 0.25s при 16кГц; зменшуй для меншої затримки.
-        """
-        self.model = Model(model_path)
-        self.rec = KaldiRecognizer(self.model, samplerate)
-        self.q: "queue.Queue[bytes]" = queue.Queue()
-        self.device = device
-        self.samplerate = samplerate
-        self.blocksize = blocksize
-        self.stream: Optional[sd.RawInputStream] = None
-
-    def _callback(self, indata, frames, time, status):
-        if status:
-            print(f"[audio] {status}", file=sys.stderr)
-        self.q.put(bytes(indata))
-
-    def start(self):
-        self.stream = sd.RawInputStream(
-            samplerate=self.samplerate,
-            blocksize=self.blocksize,
-            device=self.device,
-            dtype="int16",
-            channels=1,
-            callback=self._callback,
-        )
-        self.stream.start()
-
-    def stop(self):
-        if self.stream:
-            self.stream.stop()
-            self.stream.close()
-
-    def results(self):
-        """Генератор, що віддає фінальні текстові результати Vosk."""
-        while True:
-            data = self.q.get()
-            if self.rec.AcceptWaveform(data):
-                res = json.loads(self.rec.Result())
-                txt = (res.get("text") or "").strip()
-                if txt:
-                    yield txt
-            # else:
-            #     partial = json.loads(self.rec.PartialResult()).get("partial", "")
 
 
 # ================== HELPERS ==================
 def list_input_devices() -> None:
+    """Список вхідних аудіопристроїв через sounddevice (зручно для вибору MIC_INDEX)."""
     print("== Вхідні пристрої ==")
     for idx, dev in enumerate(sd.query_devices()):
-        if dev["max_input_channels"] > 0:
-            sr = int(dev["default_samplerate"])
-            print(f"[{idx}] {dev['name']}  (in: {dev['max_input_channels']}, sr: {sr})")
+        if dev.get("max_input_channels", 0) > 0:
+            sr = int(dev.get("default_samplerate", 0))
+            print(f"[{idx}] {dev.get('name','?')}  (in: {dev.get('max_input_channels')}, sr: {sr})")
+
+
+def check_audio_settings(device: Optional[int]) -> None:
+    """Швидка валідація каналу запису (mono int16). PvRecorder працює на 16kHz; тут лише sanity-check."""
+    try:
+        sd.check_input_settings(device=device, samplerate=16000, channels=1, dtype="int16")
+    except Exception as e:
+        print(f"Помилка аудіо-налаштувань: {e}", file=sys.stderr)
+        raise SystemExit(2)
 
 
 # ================== RUNNERS ==================
 def run_daemon(host: str = "127.0.0.1", port: int = 8000):
     uvicorn.run("assistant.bus.server:app", host=host, port=port, reload=False, workers=1)
 
-
+# ================== RUNNERS ==================
 def run_cli():
-    parser = argparse.ArgumentParser(prog="va-cli", description="Voice Assistant CLI")
+    parser = argparse.ArgumentParser(prog="va-cli", description="Voice Assistant CLI (plugins + YAML config)")
+
     sub = parser.add_subparsers(dest="cmd", required=True)
 
     # text → NLU
@@ -90,15 +53,16 @@ def run_cli():
     # reload NLU
     sub.add_parser("reload-nlu", help="Reload YAML intents")
 
-    # voice → NLU
-    p_listen = sub.add_parser("listen", help="Listen from mic, transcribe with Vosk, send to NLU")
-    p_listen.add_argument("--model", help="Path to Vosk model folder (contains model.conf)")
-    p_listen.add_argument("--device", type=int, default=None, help="Audio input device index")
-    p_listen.add_argument("--samplerate", type=int, default=16000, help="Sample rate for capture (recommended 16000)")
-    p_listen.add_argument("--blocksize", type=int, default=4000, help="Audio block size for lower latency")
+    # voice → NLU (через STT-плагін)
+    p_listen = sub.add_parser("listen", help="Listen from mic, transcribe via STT plugin, send to NLU")
+    p_listen.add_argument("--config", default="assistant/config/config.yaml", help="Path to YAML config (stt/tts)")
+    p_listen.add_argument("--plugins-dir", default="configs/plugins.d/voice", help="Directory with STT/TTS plugins")
+    p_listen.add_argument("--device", type=int, default=None, help="Audio input device index (mic)")
+    p_listen.add_argument("--frame", type=int, default=512, help="Frame length for Recorder.read()")
     p_listen.add_argument("--list-devices", action="store_true", help="List audio input devices and exit")
     p_listen.add_argument("--print-intents", action="store_true", help="Print NLU intents for each utterance")
-    p_listen.add_argument("--exit-phrases", nargs="*", default=["вийти", "стоп", "зупинись"], help="Phrases to stop loop")
+    p_listen.add_argument("--exit-phrases", nargs="*", default=["вийти", "стоп", "зупинись"],
+                          help="Phrases to stop loop")
 
     # server/common
     p_host = parser.add_argument_group("server")
@@ -110,65 +74,94 @@ def run_cli():
     if args.cmd == "parse":
         res = c.parse(args.text)
         if not res.get("ok"):
-            # log.error(res)
             print("ERR:", res.get("error"))
             raise SystemExit(1)
         print(f"intent={res['intent']} slots={res['slots']} conf={res['confidence']}")
         if "action" in res:
             print("action:", res["action"])
+        return
 
-    elif args.cmd == "reload-nlu":
+    if args.cmd == "reload-nlu":
         res = c.reload_nlu()
         print("ok" if res.get("ok") else res)
+        return
 
-    elif args.cmd == "listen":
+    if args.cmd == "listen":
         if args.list_devices:
             list_input_devices()
             return
 
-        # валідація аудіо налаштувань перед запуском
+        # 1) Завантажити плагіни з YAML
+        resolver = ConfigResolver(config_path=args.config, plugins_dir=args.plugins_dir)
         try:
-            sd.check_input_settings(device=args.device, samplerate=args.samplerate, channels=1, dtype="int16")
+            plugins = resolver.resolve_all()
         except Exception as e:
-            print(f"Помилка аудіо-налаштувань: {e}", file=sys.stderr)
-            raise SystemExit(2)
+            log.exception(e)
+            print(f"ERR: не вдалося завантажити конфіг/плагіни: {e}", file=sys.stderr)
+            raise SystemExit(3)
 
-        stt = MicSTT(model_path=args.model, samplerate=args.samplerate, device=args.device, blocksize=args.blocksize)
-        stt.start()
-        print("🎙️  Слухаю... (Ctrl+C для виходу)")
-        if args.device is not None:
-            print(f"Пристрій: {args.device}")
-        try:
-            for text in stt.results():
-                print(f"\n👂 Розпізнано: «{text}»")
+        stt = plugins["stt"]          # STTPlugin: .sample_rate(), .accept(pcm)->dict|None, .partial()
+        tts = plugins["tts"]          # TTSPlugin: .sample_rate(), .synth(text)->bytes (не обов'язково використовувати)
 
-                # простий вихід по ключовим фразам
-                if any(text.endswith(p) or text == p for p in args.exit_phrases):
-                    print("Завершення за командою користувача.")
-                    break
+        # sanity-check аудіо
+        check_audio_settings(args.device)
 
-                # відправляємо у твій NLU-сервер
-                try:
-                    res = c.parse(text)
-                except Exception as e:
-                    print(f"ERR: не вдалося звернутись до NLU: {e}", file=sys.stderr)
-                    continue
+        # 2) Стартувати мікрофон (PvRecorder обгортка)
+        with recorder_ctx(device_index=(args.device if args.device is not None else 0),
+                                   frame_length=args.frame) as rec:
+            dev_name = rec.start()
+            print(f"🎙️  Listening... (Ctrl+C for exit)")
+            print(f"Device: {dev_name} | STT={stt.__class__.__name__}")
 
-                if not res.get("ok"):
-                    # log.error(res)
-                    print("ERR:", res.get("error"))
-                    continue
+            # 3) Основний цикл: читання фреймів → STT → NLU
+            try:
+                while True:
+                    pcm = rec.read()          # list[int16], довжина = frame_length
+                    res = stt.accept(pcm)     # dict | None (фінальний результат)
+                    if not res:
+                        continue
 
-                if args.print_intents:
-                    print(f"intent={res['intent']} slots={res['slots']} conf={res['confidence']}")
+                    text = (res.get("text") or "").strip()
+                    if not text:
+                        continue
 
-                # якщо сервер повертає підказку до дії — покажемо
-                if "action" in res:
-                    print("action:", res["action"])
-        except KeyboardInterrupt:
-            print("\nЗавершення…")
-        finally:
-            stt.stop()
+                    print(f"\n👂 Розпізнано: «{text}»")
+
+                    # вихідні фрази
+                    if any(text.endswith(p) or text == p for p in args.exit_phrases):
+                        print("Завершення за командою користувача.")
+                        break
+
+                    # 4) Відправити у NLU
+                    try:
+                        nlu = c.parse(text)
+                    except Exception as e:
+                        print(f"ERR: не вдалося звернутись до NLU: {e}", file=sys.stderr)
+                        continue
+
+                    if not nlu.get("ok"):
+                        print("ERR:", nlu.get("error"))
+                        continue
+
+                    if args.print_intents:
+                        print(f"intent={nlu['intent']} slots={nlu['slots']} conf={nlu['confidence']}")
+
+                    if "action" in nlu:
+                        print("action:", nlu["action"])
+
+                    # 5) (необов'язково) Зворотнє озвучення відповіді
+                    #    Якщо захочеш: розкоментуй і додай відтворення (sounddevice/pyaudio)
+                    # reply = nlu.get("reply")
+                    # if reply:
+                    #     pcm_out = tts.synth(reply)  # bytes: PCM s16le
+                    #     # play_pcm_s16le(pcm_out, tts.sample_rate())
+
+            except KeyboardInterrupt:
+                print("\nЗавершення…")
+            # Recorder контекст сам викличе stop()/release()
+
+        return
+
 
 if __name__ == "__main__":
     run_cli()

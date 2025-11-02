@@ -1,5 +1,5 @@
 from typing import Callable, Dict
-from base import STTPlugin
+from .base import STTPlugin
 import importlib.util, sys
 from pathlib import Path
 
@@ -27,3 +27,6 @@ def discover(plugins_dir: str | Path):
         mod = importlib.util.module_from_spec(spec)
         sys.modules[mod_name] = mod
         spec.loader.exec_module(mod)
+
+def list_registered() -> list[str]:
+    return list(_registry.keys())

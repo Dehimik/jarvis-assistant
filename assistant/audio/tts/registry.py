@@ -1,5 +1,5 @@
 from typing import Callable, Dict
-from base import TTSPlugin
+from .base import TTSPlugin
 import importlib.util, sys
 from pathlib import Path
 

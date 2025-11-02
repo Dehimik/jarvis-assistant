@@ -1,7 +1,8 @@
 stt:
-  plugin: vosk-uk-v3
+  plugin: vosk_uk_v3
   options:
     model_path: "assistant/audio/models/vosk-model-uk-v3"
+    sample_rate: 16000
 
 tts:
   plugin: pyttsx3
