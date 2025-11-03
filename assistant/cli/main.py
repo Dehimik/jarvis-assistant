@@ -5,6 +5,7 @@ import sys
 from typing import Optional
 
 import sounddevice as sd
+import numpy as np
 import uvicorn
 
 from assistant.bus.client import BusClient
@@ -16,6 +17,13 @@ from assistant.audio.recorder import recorder_ctx  # PvRecorder-обгортка
 
 log = setup_logger(app_name="jarvis", level="ERROR", env="dev", serialize=False)
 
+def play_pcm_s16le(data: bytes, sample_rate: int = 22050):
+    """Програти PCM s16le з пам'яті"""
+    if not data:
+        return
+    arr = np.frombuffer(data, dtype=np.int16)
+    sd.play(arr, samplerate=sample_rate)
+    sd.wait()
 
 # ================== HELPERS ==================
 def list_input_devices() -> None:
@@ -149,12 +157,15 @@ def run_cli():
                     if "action" in nlu:
                         print("action:", nlu["action"])
 
+                    if "reply" in nlu:
+                        print("reply:", nlu["reply"])
+
                     # 5) (необов'язково) Зворотнє озвучення відповіді
                     #    Якщо захочеш: розкоментуй і додай відтворення (sounddevice/pyaudio)
-                    # reply = nlu.get("reply")
-                    # if reply:
-                    #     pcm_out = tts.synth(reply)  # bytes: PCM s16le
-                    #     # play_pcm_s16le(pcm_out, tts.sample_rate())
+                    reply = nlu.get("reply")
+                    if reply:
+                        pcm_out = tts.synth(reply)
+                        play_pcm_s16le(pcm_out, tts.sample_rate())
 
             except KeyboardInterrupt:
                 print("\nЗавершення…")

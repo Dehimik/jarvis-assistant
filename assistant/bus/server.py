@@ -33,10 +33,13 @@ async def intents_parse(body: ParseIn):
     intent_dict = {"name": res.intent.name, "slots": res.intent.slots}
     action = await app.state.plugins.dispatch(intent_dict)  # ← виконуємо дію
 
+    reply_text = app.state.nlu.get_reply(res, action)
+
     return {
         "ok": bool(action.get("ok")),
         "intent": res.intent.name,
         "slots": res.intent.slots,
         "confidence": res.confidence,
         "action": action,
+        "reply": reply_text,
     }

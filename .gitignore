@@ -1,6 +1,9 @@
 .venv
 .idea
+gui/node_modules
 assistant/audio/models
+gui/src-tauri/gen
+gui/src-tauri/target
 
 .env
 .gitignore

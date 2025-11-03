@@ -26,6 +26,40 @@ class NLU:
     def reload(self) -> None:
         self.grammar = load_grammar_from_dirs(self.manifest_dirs)
 
+    def get_reply(self, result: "IntentResult", action: dict | None = None) -> str:
+        """
+        Повертає текстову відповідь на базі розпізнаного інтенту та результату виконання плагіна.
+        Використай це з TTS: tts.synth(reply).
+        """
+        # 0) Якщо взагалі нічого не розпізнано
+        if not result or not result.ok or not result.intent:
+            return "Вибач, я не зрозумів команду."
+
+        intent = result.intent.name
+        slots = result.intent.slots or {}
+        ok = bool(action.get("ok")) if isinstance(action, dict) else False
+        err = (action or {}).get("error") if isinstance(action, dict) else None
+
+        # Шаблони відповідей під популярні інтенти (розширюй коли буде потрібно)
+        # Якщо інтент невідомий — падаємо на дефолт.
+        if intent == "app.open":
+            app = slots.get("app") or "додаток"
+            if ok:
+                # опційно: якщо launcher повертає назву/шлях — підставляємо
+                src = (action or {}).get("src") or ""
+                if src:
+                    return f"Відкриваю {app} ({src})."
+                return f"Відкриваю {app}."
+            else:
+                reason = err or "сталася помилка під час запуску."
+                return f"Не вдалося відкрити {app}: {reason}"
+
+        # Дефолт для інших інтентів
+        if ok:
+            return "Готово."
+        else:
+            return f"Не вдалося виконати команду{(': ' + err) if err else '.'}"
+
     def parse(self, text: str) -> IntentResult:
         """
                 Флоу:
