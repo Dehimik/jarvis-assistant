@@ -11,14 +11,15 @@ import uvicorn
 from assistant.bus.client import BusClient
 from assistant.telemetry.log import setup_logger
 
-# наші модулі ядра
+# core modules
 from assistant.config.resolver import ConfigResolver
 from assistant.audio.recorder import recorder_ctx  # PvRecorder-обгортка: start/read/stop/release
 
+# init logger
 log = setup_logger(app_name="jarvis", level="ERROR", env="dev", serialize=False)
 
 def play_pcm_s16le(data: bytes, sample_rate: int = 22050):
-    """Програти PCM s16le з пам'яті"""
+    """PLay PCM s16le from bytes"""
     if not data:
         return
     arr = np.frombuffer(data, dtype=np.int16)
@@ -27,28 +28,25 @@ def play_pcm_s16le(data: bytes, sample_rate: int = 22050):
 
 # ================== HELPERS ==================
 def list_input_devices() -> None:
-    """Список вхідних аудіопристроїв через sounddevice (зручно для вибору MIC_INDEX)."""
+    """List input devices using sounddevice"""
     print("== Вхідні пристрої ==")
     for idx, dev in enumerate(sd.query_devices()):
         if dev.get("max_input_channels", 0) > 0:
             sr = int(dev.get("default_samplerate", 0))
             print(f"[{idx}] {dev.get('name','?')}  (in: {dev.get('max_input_channels')}, sr: {sr})")
 
-
 def check_audio_settings(device: Optional[int]) -> None:
-    """Швидка валідація каналу запису (mono int16). PvRecorder працює на 16kHz; тут лише sanity-check."""
+    """Quick validation for channel (mono int16). PvRecorder works on 16kHz; theres only sanity-check"""
     try:
         sd.check_input_settings(device=device, samplerate=16000, channels=1, dtype="int16")
     except Exception as e:
         print(f"Помилка аудіо-налаштувань: {e}", file=sys.stderr)
         raise SystemExit(2)
 
-
 # ================== RUNNERS ==================
 def run_daemon(host: str = "127.0.0.1", port: int = 8000):
     uvicorn.run("assistant.bus.server:app", host=host, port=port, reload=False, workers=1)
 
-# ================== RUNNERS ==================
 def run_cli():
     parser = argparse.ArgumentParser(prog="va-cli", description="Voice Assistant CLI (plugins + YAML config)")
 
@@ -61,7 +59,7 @@ def run_cli():
     # reload NLU
     sub.add_parser("reload-nlu", help="Reload YAML intents")
 
-    # voice → NLU (через STT-плагін)
+    # voice → NLU
     p_listen = sub.add_parser("listen", help="Listen from mic, transcribe via STT plugin, send to NLU")
     p_listen.add_argument("--config", default="assistant/config/config.yaml", help="Path to YAML config (stt/tts)")
     p_listen.add_argument("--plugins-dir", default="configs/plugins.d/voice", help="Directory with STT/TTS plugins")
@@ -80,6 +78,7 @@ def run_cli():
     args = parser.parse_args()
     c = BusClient(base_url=args.url)
 
+    # for parsing from text
     if args.cmd == "parse":
         res = c.parse(args.text)
         if not res.get("ok"):
@@ -90,17 +89,19 @@ def run_cli():
             print("action:", res["action"])
         return
 
+    # for reload nlu without stopping server
     if args.cmd == "reload-nlu":
         res = c.reload_nlu()
         print("ok" if res.get("ok") else res)
         return
 
+    # for listening
     if args.cmd == "listen":
         if args.list_devices:
             list_input_devices()
             return
 
-        # 1) Завантажити плагіни з YAML
+        # download plugins from yaml
         resolver = ConfigResolver(config_path=args.config, plugins_dir=args.plugins_dir)
         try:
             plugins = resolver.resolve_all()
@@ -112,21 +113,21 @@ def run_cli():
         stt = plugins["stt"]          # STTPlugin: .sample_rate(), .accept(pcm)->dict|None, .partial()
         tts = plugins["tts"]          # TTSPlugin: .sample_rate(), .synth(text)->bytes (не обов'язково використовувати)
 
-        # sanity-check аудіо
+        # sanity-check audio
         check_audio_settings(args.device)
 
-        # 2) Стартувати мікрофон (PvRecorder обгортка)
+        # start micro
         with recorder_ctx(device_index=(args.device if args.device is not None else 0),
                                    frame_length=args.frame) as rec:
             dev_name = rec.start()
             print(f"🎙️  Listening... (Ctrl+C for exit)")
             print(f"Device: {dev_name} | STT={stt.__class__.__name__}")
 
-            # 3) Основний цикл: читання фреймів → STT → NLU
+            # main loop: read frames → STT → NLU
             try:
                 while True:
-                    pcm = rec.read()          # list[int16], довжина = frame_length
-                    res = stt.accept(pcm)     # dict | None (фінальний результат)
+                    pcm = rec.read()          # list[int16], length = frame_length
+                    res = stt.accept(pcm)     # dict | None (final result)
                     if not res:
                         continue
 
@@ -136,12 +137,12 @@ def run_cli():
 
                     print(f"\n👂 Розпізнано: «{text}»")
 
-                    # вихідні фрази
+                    # exit phrases
                     if any(text.endswith(p) or text == p for p in args.exit_phrases):
                         print("Завершення за командою користувача.")
                         break
 
-                    # 4) Відправити у NLU
+                    # parse in NLU
                     try:
                         nlu = c.parse(text)
                     except Exception as e:
@@ -169,7 +170,7 @@ def run_cli():
 
             except KeyboardInterrupt:
                 print("\nЗавершення…")
-            # Recorder контекст сам викличе stop()/release()
+            # Recorder context will himself call stop()/release()
         return
 
 
