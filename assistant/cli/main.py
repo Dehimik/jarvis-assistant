@@ -69,6 +69,7 @@ def run_cli():
     p_listen.add_argument("--frame", type=int, default=512, help="Frame length for Recorder.read()")
     p_listen.add_argument("--list-devices", action="store_true", help="List audio input devices and exit")
     p_listen.add_argument("--print-intents", action="store_true", help="Print NLU intents for each utterance")
+    p_listen.add_argument("--say-ok", action="store_true", help="Say after intent parsing")
     p_listen.add_argument("--exit-phrases", nargs="*", default=["вийти", "стоп", "зупинись"],
                           help="Phrases to stop loop")
 
@@ -160,17 +161,15 @@ def run_cli():
                     if "reply" in nlu:
                         print("reply:", nlu["reply"])
 
-                    # 5) (необов'язково) Зворотнє озвучення відповіді
-                    #    Якщо захочеш: розкоментуй і додай відтворення (sounddevice/pyaudio)
-                    reply = nlu.get("reply")
-                    if reply:
-                        pcm_out = tts.synth(reply)
-                        play_pcm_s16le(pcm_out, tts.sample_rate())
+                    if args.say_ok:
+                        reply = nlu.get("reply")
+                        if reply:
+                            pcm_out = tts.synth(reply)
+                            play_pcm_s16le(pcm_out, tts.sample_rate())
 
             except KeyboardInterrupt:
                 print("\nЗавершення…")
             # Recorder контекст сам викличе stop()/release()
-
         return
 
 
