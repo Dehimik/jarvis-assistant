@@ -17,6 +17,7 @@ intents:
           obsidian: ["obsidian", "обсидіан"]
           https://roblox.com: ["roblox", "роблокс"]
           https://www.youtube.com/watch?v=7D4qgR3TsRc: ["Україна понад усе", "Україна"]
+          prismlauncher: ["майнкрафт", "майн", "minecraft"]
   app.close:
     patterns:
       - "закрий {app:app_name}"
@@ -29,3 +30,4 @@ intents:
           Telegram: [ "telegram", "телеграм" ]
           blender: [ "blender", "блендер" ]
           obsidian: [ "obsidian", "обсидіан" ]
+          prismlauncher: [ "майнкрафт", "майн", "minecraft" ]

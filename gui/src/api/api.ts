@@ -12,6 +12,11 @@ export async function getStatus(): Promise<JarvisStatus> {
   return data
 }
 
+export async function setStatus(patch: Partial<JarvisStatus>): Promise<JarvisStatus> {
+  const { data } = await api.post('/api/status/toggle', patch)
+    return data as JarvisStatus;
+}
+
 export type JarvisSettings = {
   stt_device?: string
   tts_voice?: string

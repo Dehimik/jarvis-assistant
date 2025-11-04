@@ -257,3 +257,8 @@ Traceback (most recent call last):
                                             └ 'vosk_uk_v3'
 
 ValueError: Unknown STT engine: vosk_uk_v3. Available: []
+2025-11-04 12:33:10.277 | ERROR    | logging:callHandlers:1737 - Form data requires "python-multipart" to be installed. 
+You can install "python-multipart" with: 
+
+pip install python-multipart
+
