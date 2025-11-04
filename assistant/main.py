@@ -120,8 +120,8 @@ async def run_listen(args):
         frame_length=args.frame
     ) as rec:
         dev_name = rec.start()
-        print(f"🎙️  Listening... (Ctrl+C for exit)")
-        print(f"Device: {dev_name} | STT={stt.__class__.__name__}")
+        log.info(f"Listening... (Ctrl+C for exit)")
+        log.info(f"Device: {dev_name} | STT={stt.__class__.__name__}")
 
         # main loop: read frames → STT → NLU
         try:
@@ -135,32 +135,32 @@ async def run_listen(args):
                 if not text:
                     continue
 
-                print(f"\n👂 Розпізнано: «{text}»")
+                log.info(f"\nРозпізнано: «{text}»")
 
                 # exit phrases
                 if any(text.endswith(p) or text == p for p in exit_phrases):
-                    print("Завершення за командою користувача.")
+                    log.info("Завершення за командою користувача.")
                     break
 
                 # parse in NLU
                 try:
                     nlu = c.parse(text)       # очікуємо dict: ok/intent/slots/confidence/reply/action
                 except Exception as e:
-                    print(f"ERR: не вдалося звернутись до NLU: {e}", file=sys.stderr)
+                    log.exception(f"ERR: не вдалося звернутись до NLU: {e}", file=sys.stderr)
                     continue
 
                 if not nlu.get("ok"):
-                    print("ERR:", nlu.get("error"))
+                    log.error("ERR:", nlu.get("error"))
                     continue
 
                 if args.print_intents:
-                    print(f"intent={nlu['intent']} slots={nlu['slots']} conf={nlu['confidence']}")
+                    log.info(f"intent={nlu['intent']} slots={nlu['slots']} conf={nlu['confidence']}")
 
                 if "action" in nlu:
-                    print("action:", nlu["action"])
+                    log.info("action:", nlu["action"])
 
                 if "reply" in nlu:
-                    print("reply:", nlu["reply"])
+                    log.info("reply:", nlu["reply"])
 
                 if args.say_ok:
                     reply = nlu.get("reply")
@@ -169,10 +169,10 @@ async def run_listen(args):
                             pcm_out = tts.synth(reply)
                             play_pcm_s16le(pcm_out, tts.sample_rate())
                         except Exception as e:
-                            print(f"ERR: TTS synth/play failed: {e}", file=sys.stderr)
+                            log.exception(f"ERR: TTS synth/play failed: {e}", file=sys.stderr)
 
         except KeyboardInterrupt:
-            print("\nЗавершення…")
+            log.info("\nЗавершення…")
         # Recorder context сам викличе stop()/release()
     return
 

@@ -120,7 +120,7 @@ def run_cli():
         with recorder_ctx(device_index=(args.device if args.device is not None else 0),
                                    frame_length=args.frame) as rec:
             dev_name = rec.start()
-            print(f"🎙️  Listening... (Ctrl+C for exit)")
+            print(f"Listening... (Ctrl+C for exit)")
             print(f"Device: {dev_name} | STT={stt.__class__.__name__}")
 
             # main loop: read frames → STT → NLU
@@ -135,7 +135,7 @@ def run_cli():
                     if not text:
                         continue
 
-                    print(f"\n👂 Розпізнано: «{text}»")
+                    print(f"\nРозпізнано: «{text}»")
 
                     # exit phrases
                     if any(text.endswith(p) or text == p for p in args.exit_phrases):

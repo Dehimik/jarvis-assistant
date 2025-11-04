@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import subprocess
 import sys
 import threading
@@ -49,6 +50,8 @@ class JarvisRunner:
         self._proc: subprocess.Popen | None = None
         self._python = python
         self._log_file = log_file
+        self._pump_thr: threading.Thread | None = None
+        self._stop_evt = threading.Event()
 
     def is_running(self) -> bool:
         return self._proc is not None and self._proc.poll() is None
@@ -68,7 +71,7 @@ class JarvisRunner:
             return
 
         args = [
-            self._python, "-m", "assistant.cli.main",
+            self._python, "-u", "-m", "assistant.cli.main",
             "--url", url,
             "listen",
             "--config", config,
@@ -82,14 +85,37 @@ class JarvisRunner:
         if say_ok:
             args.append("--say-ok")
 
-        # stdout/stderr → у лог, щоб GUI бачив це в /api/logs і WS
+        env = os.environ.copy()
+        env["PYTHONUNBUFFERED"] = "1"
+
+        # Читаємо stdout у батьківському процесі:
+        self._proc = subprocess.Popen(
+            args,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            bufsize=1,  # line-buffered reader у батька
+            env=env,
+        )
+
+        self._stop_evt.clear()
+        self._pump_thr = threading.Thread(target=self._pump_output, name="jarvis-log-pump", daemon=True)
+        self._pump_thr.start()
+
+    def _pump_output(self):
         self._log_file.parent.mkdir(parents=True, exist_ok=True)
-        out = self._log_file.open("a", encoding="utf-8", errors="ignore")
-        self._proc = subprocess.Popen(args, stdout=out, stderr=out, text=True)
+        with self._log_file.open("a", encoding="utf-8", errors="ignore") as f:
+            if self._proc and self._proc.stdout:
+                for line in self._proc.stdout:
+                    f.write(line)
+                    f.flush()  # ← критично: зливати одразу
+                    if self._stop_evt.is_set():
+                        break
 
     def stop(self, timeout: float = 3.0):
         if not self.is_running():
             return
+        self._stop_evt.set()
         with suppress(Exception):
             self._proc.terminate()
             try:
@@ -98,7 +124,9 @@ class JarvisRunner:
                 self._proc.kill()
                 self._proc.wait(timeout=1.0)
         self._proc = None
-
+        if self._pump_thr:
+            self._pump_thr.join(timeout=1.0)
+            self._pump_thr = None
 
 # models
 class ParseIn(BaseModel):
@@ -260,23 +288,69 @@ def get_logs(tail: int = 1000):
 
 @app.websocket("/api/logs/stream")
 async def logs_stream(ws: WebSocket):
-    await ws.accept()
-    last_size = LOG_FILE.stat().st_size if LOG_FILE.exists() else 0
     try:
+        await ws.accept()
+        # (не обов'язково, але корисно) перевіряти Origin, якщо хочеш:
+        # origin = ws.headers.get("origin")
+
+        # дати стартовий хвіст (щоб щось показалось одразу)
+        tail = 500
+        if LOG_FILE.exists():
+            try:
+                lines = LOG_FILE.read_text(errors="ignore").splitlines()[-tail:]
+                if lines:
+                    await ws.send_text("\n".join(lines))
+            except Exception as e:
+                # просто логнемо в консоль
+                print(f"[WS] failed to send initial tail: {e!r}")
+
+        # початковий офсет
+        last_size = LOG_FILE.stat().st_size if LOG_FILE.exists() else 0
+
+        # цикл: tail -f + keep-alive пінги
+        ping_every = 20  # сек
+        t_last_ping = asyncio.get_event_loop().time()
+
         while True:
             await asyncio.sleep(0.5)
+
+            # keep-alive, щоб проксі/в'ю не рубали з’єднання
+            now = asyncio.get_event_loop().time()
+            if now - t_last_ping > ping_every:
+                try:
+                    await ws.send_text("")  # дрібний ping (або ws.send_bytes(b''))
+                except Exception as e:
+                    print(f"[WS] ping failed: {e!r}")
+                    break
+                t_last_ping = now
+
             if not LOG_FILE.exists():
                 continue
+
             size = LOG_FILE.stat().st_size
             if size > last_size:
-                with LOG_FILE.open("r", errors="ignore") as f:
-                    f.seek(last_size)
-                    chunk = f.read()
-                last_size = size
-                for line in chunk.splitlines():
-                    await ws.send_text(line)
+                try:
+                    with LOG_FILE.open("r", errors="ignore") as f:
+                        f.seek(last_size)
+                        chunk = f.read()
+                    last_size = size
+                    if chunk:
+                        for line in chunk.splitlines():
+                            await ws.send_text(line)
+                except Exception as e:
+                    print(f"[WS] read/send failed: {e!r}")
+                    break
+
     except WebSocketDisconnect:
+        # клієнт закрився — ок
         return
+    except Exception as e:
+        # якщо звалилось до accept — браузер бачить “closed before established”
+        print(f"[WS] handshake/handler error: {e!r}")
+    finally:
+        # нічого, просто вийдемо
+        pass
+
 
 # plugins
 @app.get("/api/plugins")
