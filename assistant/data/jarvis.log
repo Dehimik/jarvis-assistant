@@ -1,16 +1,4 @@
-usage: va-cli listen [-h] [--config CONFIG] [--plugins-dir PLUGINS_DIR]
-                     [--device DEVICE] [--frame FRAME] [--list-devices]
-                     [--print-intents] [--say-ok]
-                     [--exit-phrases [EXIT_PHRASES ...]]
-va-cli listen: error: argument --device: invalid int value: 'pulse'
-usage: va-cli [-h] [--url URL] {parse,reload-nlu,listen} ...
-va-cli: error: unrecognized arguments: --url http://127.0.0.1:8000
-usage: va-cli [-h] [--url URL] {parse,reload-nlu,listen} ...
-va-cli: error: unrecognized arguments: --url http://127.0.0.1:8000
-usage: va-cli [-h] [--url URL] {parse,reload-nlu,listen} ...
-va-cli: error: unrecognized arguments: --url http://127.0.0.1:8000
-usage: va-cli [-h] [--url URL] {parse,reload-nlu,listen} ...
-va-cli: error: unrecognized arguments: --url http://127.0.0.1:8000['vosk_uk_v3']
+[32m2025-11-07 14:46:45.577[0m | [1mINFO    [0m | [36m16576[0m:[36m139705853549504[0m | [35mlog[0m:[35minfo[0m:[35m144[0m - [1m🎙️  Jarvis is starting...[0m
 ['vosk_uk_v3']
 LOG (VoskAPI:ReadDataFiles():model.cc:213) Decoding params beam=13 max-active=7000 lattice-beam=6
 LOG (VoskAPI:ReadDataFiles():model.cc:216) Silence phones 1:2:3:4:5
@@ -22,52 +10,198 @@ LOG (VoskAPI:ComputeDerivedVars():ivector-extractor.cc:204) Done.
 LOG (VoskAPI:ReadDataFiles():model.cc:279) Loading HCLG from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/HCLG.fst
 LOG (VoskAPI:ReadDataFiles():model.cc:297) Loading words from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/words.txt
 LOG (VoskAPI:ReadDataFiles():model.cc:308) Loading winfo /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/phones/word_boundary.int
-Listening... (Ctrl+C for exit)
-Device: pulse | STT=VoskUkPlugin
-
-Розпізнано: «включити телеграм»
-ERR: no_intent
-
-Розпізнано: «телеграм запустив»
-intent=app.open slots={'app': 'Telegram'} conf=0.6153846153846154
-action: {'ok': True, 'launched': ['Telegram']}
-reply: Відкриваю Telegram.
-
-Розпізнано: «що займала виключає телеграм»
-ERR: None
-
-Розпізнано: «вимкни телеграм»
-intent=app.close slots={'app': 'Telegram'} conf=0.6
-action: {'ok': True, 'intent': 'app.close', 'value': 'Telegram', 'matched_pids': [15618], 'terminated': [15618], 'killed': [], 'still_alive': [], 'used_window_close': False, 'scanned': 248}
-reply: Готово.
-
-Розпізнано: «помилково»
-ERR: no_intent
-
-Розпізнано: «становлять»
-ERR: no_intent
-
-Розпізнано: «включає блендер»
-ERR: no_intent
-
-Розпізнано: «місця»
-ERR: no_intent
-
-Розпізнано: «терпляче включена заході»
-ERR: no_intent
-
-Розпізнано: «запустив блендер»
-intent=app.open slots={'app': 'blender'} conf=0.6153846153846154
-action: {'ok': True, 'launched': ['blender']}
-reply: Відкриваю blender.
-
-Розпізнано: «за її бал»
-ERR: no_intent
-
-Розпізнано: «зірки»
-ERR: None
-
-Розпізнано: «вимкне блантер»
-intent=app.close slots={'app': 'blender'} conf=0.5217391304347826
-action: {'ok': True, 'intent': 'app.close', 'value': 'blender', 'matched_pids': [15719], 'terminated': [15719], 'killed': [], 'still_alive': [], 'used_window_close': False, 'scanned': 249}
-reply: Готово.
+[32m2025-11-07 14:46:48.349[0m | [1mINFO    [0m | [36m16576[0m:[36m139705853549504[0m | [35mlog[0m:[35minfo[0m:[35m144[0m - [1mListening... (Ctrl+C for exit)[0m
+[32m2025-11-07 14:46:48.349[0m | [1mINFO    [0m | [36m16576[0m:[36m139705853549504[0m | [35mlog[0m:[35minfo[0m:[35m144[0m - [1mDevice: pulse | STT=VoskUkPlugin[0m
+[32m2025-11-07 14:47:11.037[0m | [1mINFO    [0m | [36m16576[0m:[36m139705853549504[0m | [35mlog[0m:[35minfo[0m:[35m144[0m - [1m
+Text: «відкриє олексія»[0m
+[32m2025-11-07 14:47:11.049[0m | [31m[1mERROR   [0m | [36m16576[0m:[36m139705853549504[0m | [35mlog[0m:[35merror[0m:[35m146[0m - [31m[1mERR: None[0m
+[32m2025-11-07 14:47:16.815[0m | [1mINFO    [0m | [36m16576[0m:[36m139705853549504[0m | [35mlog[0m:[35minfo[0m:[35m144[0m - [1m
+Text: «відкрити легран»[0m
+[32m2025-11-07 14:47:16.818[0m | [1mINFO    [0m | [36m16576[0m:[36m139705853549504[0m | [35mlog[0m:[35minfo[0m:[35m144[0m - [1mintent=app.open slots={'app': 'Telegram'} conf=0.56[0m
+[32m2025-11-07 14:47:16.819[0m | [1mINFO    [0m | [36m16576[0m:[36m139705853549504[0m | [35mlog[0m:[35minfo[0m:[35m144[0m - [1maction: {'ok': True, 'launched': ['Telegram']}[0m
+[32m2025-11-07 14:47:16.819[0m | [1mINFO    [0m | [36m16576[0m:[36m139705853549504[0m | [35mlog[0m:[35minfo[0m:[35m144[0m - [1mreply: Відкриваю Telegram.[0m
+[32m2025-11-07 14:47:25.731[0m | [1mINFO    [0m | [36m16576[0m:[36m139705853549504[0m | [35mlog[0m:[35minfo[0m:[35m144[0m - [1m
+Text: «закрита на»[0m
+[32m2025-11-07 14:47:25.734[0m | [31m[1mERROR   [0m | [36m16576[0m:[36m139705853549504[0m | [35mlog[0m:[35merror[0m:[35m146[0m - [31m[1mERR: None[0m
+[32m2025-11-07 14:47:30.288[0m | [1mINFO    [0m | [36m16576[0m:[36m139705853549504[0m | [35mlog[0m:[35minfo[0m:[35m144[0m - [1m
+Text: «бемкне телеграм»[0m
+[32m2025-11-07 14:47:30.290[0m | [31m[1mERROR   [0m | [36m16576[0m:[36m139705853549504[0m | [35mlog[0m:[35merror[0m:[35m146[0m - [31m[1mERR: no_intent[0m
+[32m2025-11-07 14:47:34.280[0m | [1mINFO    [0m | [36m16576[0m:[36m139705853549504[0m | [35mlog[0m:[35minfo[0m:[35m144[0m - [1m
+Text: «телеграму вимкне»[0m
+[32m2025-11-07 14:47:34.343[0m | [1mINFO    [0m | [36m16576[0m:[36m139705853549504[0m | [35mlog[0m:[35minfo[0m:[35m144[0m - [1mintent=app.close slots={'app': 'Telegram'} conf=0.5217391304347826[0m
+[32m2025-11-07 14:47:34.344[0m | [1mINFO    [0m | [36m16576[0m:[36m139705853549504[0m | [35mlog[0m:[35minfo[0m:[35m144[0m - [1maction: {'ok': True, 'intent': 'app.close', 'value': 'Telegram', 'matched_pids': [17154], 'terminated': [17154], 'killed': [], 'still_alive': [], 'used_window_close': False, 'scanned': 257}[0m
+[32m2025-11-07 14:47:34.344[0m | [1mINFO    [0m | [36m16576[0m:[36m139705853549504[0m | [35mlog[0m:[35minfo[0m:[35m144[0m - [1mreply: Готово.[0m
+2025-11-07 14:48:58.464 | INFO     | 17802:140199380450240 | log:info:144 - 🎙️  Jarvis is starting...
+['vosk_uk_v3']
+LOG (VoskAPI:ReadDataFiles():model.cc:213) Decoding params beam=13 max-active=7000 lattice-beam=6
+LOG (VoskAPI:ReadDataFiles():model.cc:216) Silence phones 1:2:3:4:5
+LOG (VoskAPI:RemoveOrphanNodes():nnet-nnet.cc:948) Removed 0 orphan nodes.
+LOG (VoskAPI:RemoveOrphanComponents():nnet-nnet.cc:847) Removing 0 orphan components.
+LOG (VoskAPI:ReadDataFiles():model.cc:248) Loading i-vector extractor from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/ivector/final.ie
+LOG (VoskAPI:ComputeDerivedVars():ivector-extractor.cc:183) Computing derived variables for iVector extractor
+LOG (VoskAPI:ComputeDerivedVars():ivector-extractor.cc:204) Done.
+LOG (VoskAPI:ReadDataFiles():model.cc:279) Loading HCLG from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/HCLG.fst
+LOG (VoskAPI:ReadDataFiles():model.cc:297) Loading words from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/words.txt
+LOG (VoskAPI:ReadDataFiles():model.cc:308) Loading winfo /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/phones/word_boundary.int
+2025-11-07 14:49:01.811 | INFO     | 17802:140199380450240 | log:info:144 - Listening... (Ctrl+C for exit)
+2025-11-07 14:49:01.812 | INFO     | 17802:140199380450240 | log:info:144 - Device: pulse | STT=VoskUkPlugin
+2025-11-07 14:49:33.885 | INFO     | 17802:140199380450240 | log:info:144 - 
+Text: «відкритого храм»
+2025-11-07 14:49:33.896 | INFO     | 17802:140199380450240 | log:info:144 - intent=app.open slots={'app': 'chromium'} conf=0.56
+2025-11-07 14:49:33.896 | INFO     | 17802:140199380450240 | log:info:144 - action: {'ok': True, 'launched': ['chromium']}
+2025-11-07 14:49:33.896 | INFO     | 17802:140199380450240 | log:info:144 - reply: Відкриваю chromium.
+2025-11-07 14:54:01.202 | INFO     | 20720:140482816555968 | log:info:144 - 🎙️  Jarvis is starting...
+['vosk_uk_v3']
+LOG (VoskAPI:ReadDataFiles():model.cc:213) Decoding params beam=13 max-active=7000 lattice-beam=6
+LOG (VoskAPI:ReadDataFiles():model.cc:216) Silence phones 1:2:3:4:5
+LOG (VoskAPI:RemoveOrphanNodes():nnet-nnet.cc:948) Removed 0 orphan nodes.
+LOG (VoskAPI:RemoveOrphanComponents():nnet-nnet.cc:847) Removing 0 orphan components.
+LOG (VoskAPI:ReadDataFiles():model.cc:248) Loading i-vector extractor from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/ivector/final.ie
+LOG (VoskAPI:ComputeDerivedVars():ivector-extractor.cc:183) Computing derived variables for iVector extractor
+LOG (VoskAPI:ComputeDerivedVars():ivector-extractor.cc:204) Done.
+LOG (VoskAPI:ReadDataFiles():model.cc:279) Loading HCLG from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/HCLG.fst
+LOG (VoskAPI:ReadDataFiles():model.cc:297) Loading words from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/words.txt
+LOG (VoskAPI:ReadDataFiles():model.cc:308) Loading winfo /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/phones/word_boundary.int
+2025-11-07 14:54:04.039 | INFO     | 20720:140482816555968 | log:info:144 - Listening... (Ctrl+C for exit)
+2025-11-07 14:54:04.039 | INFO     | 20720:140482816555968 | log:info:144 - Device: pulse | STT=VoskUkPlugin
+2025-11-07 14:54:09.721 | INFO     | 20720:140482816555968 | log:info:144 - 
+Text: «відкрита грам»
+2025-11-07 14:54:09.734 | INFO     | 20720:140482816555968 | log:info:144 - intent=app.open slots={'app': 'Telegram'} conf=0.6086956521739131
+2025-11-07 14:54:09.735 | INFO     | 20720:140482816555968 | log:info:144 - action: {'ok': True, 'launched': ['Telegram']}
+2025-11-07 14:54:09.735 | INFO     | 20720:140482816555968 | log:info:144 - reply: Відкриваю Telegram.
+2025-11-07 14:54:15.226 | INFO     | 20720:140482816555968 | log:info:144 - 
+Text: «закрити легран»
+2025-11-07 14:54:15.285 | INFO     | 20720:140482816555968 | log:info:144 - intent=app.close slots={'app': 'Telegram'} conf=0.5217391304347826
+2025-11-07 14:54:15.285 | INFO     | 20720:140482816555968 | log:info:144 - action: {'ok': True, 'intent': 'app.close', 'value': 'Telegram', 'matched_pids': [21275], 'terminated': [21275], 'killed': [], 'still_alive': [], 'used_window_close': False, 'scanned': 252}
+2025-11-07 14:54:15.286 | INFO     | 20720:140482816555968 | log:info:144 - reply: Готово.
+2025-11-07 14:54:20.262 | INFO     | 20720:140482816555968 | log:info:144 - 
+Text: «багато»
+2025-11-07 14:54:20.264 | ERROR    | 20720:140482816555968 | log:error:146 - ERR: no_intent
+2025-11-07 17:56:13.339 | INFO     | 24623:140141257825216 | log:info:144 - 🎙️  Jarvis is starting...
+['vosk_uk_v3']
+LOG (VoskAPI:ReadDataFiles():model.cc:213) Decoding params beam=13 max-active=7000 lattice-beam=6
+LOG (VoskAPI:ReadDataFiles():model.cc:216) Silence phones 1:2:3:4:5
+LOG (VoskAPI:RemoveOrphanNodes():nnet-nnet.cc:948) Removed 0 orphan nodes.
+LOG (VoskAPI:RemoveOrphanComponents():nnet-nnet.cc:847) Removing 0 orphan components.
+LOG (VoskAPI:ReadDataFiles():model.cc:248) Loading i-vector extractor from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/ivector/final.ie
+LOG (VoskAPI:ComputeDerivedVars():ivector-extractor.cc:183) Computing derived variables for iVector extractor
+LOG (VoskAPI:ComputeDerivedVars():ivector-extractor.cc:204) Done.
+LOG (VoskAPI:ReadDataFiles():model.cc:279) Loading HCLG from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/HCLG.fst
+LOG (VoskAPI:ReadDataFiles():model.cc:297) Loading words from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/words.txt
+LOG (VoskAPI:ReadDataFiles():model.cc:308) Loading winfo /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/phones/word_boundary.int
+2025-11-07 17:56:16.456 | INFO     | 24623:140141257825216 | log:info:144 - Listening... (Ctrl+C for exit)
+2025-11-07 17:56:16.456 | INFO     | 24623:140141257825216 | log:info:144 - Device: pulse | STT=VoskUkPlugin
+2025-11-07 17:56:21.868 | INFO     | 24623:140141257825216 | log:info:144 - 
+Text: «смак»
+2025-11-07 17:56:21.879 | ERROR    | 24623:140141257825216 | log:error:146 - ERR: None
+2025-11-07 17:56:31.958 | INFO     | 24623:140141257825216 | log:info:144 - 
+Text: «включив»
+2025-11-07 17:56:31.960 | ERROR    | 24623:140141257825216 | log:error:146 - ERR: no_intent
+2025-11-07 17:56:36.719 | INFO     | 24623:140141257825216 | log:info:144 - 
+Text: «тут на ній запустив ступка»
+2025-11-07 17:56:36.726 | INFO     | 24623:140141257825216 | log:info:144 - intent=app.open slots={'app': 'https://youtube.com'} conf=0.5142857142857142
+2025-11-07 17:56:36.727 | INFO     | 24623:140141257825216 | log:info:144 - action: {'ok': True, 'launched': ['xdg-open', 'https://youtube.com']}
+2025-11-07 17:56:36.727 | INFO     | 24623:140141257825216 | log:info:144 - reply: Відкриваю https://youtube.com.
+2025-11-07 17:56:41.812 | INFO     | 24623:140141257825216 | log:info:144 - 
+Text: «понімаєш»
+2025-11-07 17:56:41.815 | ERROR    | 24623:140141257825216 | log:error:146 - ERR: no_intent
+2025-11-07 17:56:47.540 | INFO     | 24623:140141257825216 | log:info:144 - 
+Text: «закриє дубина»
+2025-11-07 17:56:47.543 | ERROR    | 24623:140141257825216 | log:error:146 - ERR: None
+2025-11-07 17:56:52.843 | INFO     | 24623:140141257825216 | log:info:144 - 
+Text: «для закрий ютуб»
+2025-11-07 17:56:52.877 | ERROR    | 24623:140141257825216 | log:error:146 - ERR: None
+2025-11-07 17:56:58.446 | INFO     | 24623:140141257825216 | log:info:144 - 
+Text: «я дуб вимкни імені на жаль»
+2025-11-07 17:56:58.475 | ERROR    | 24623:140141257825216 | log:error:146 - ERR: None
+2025-11-07 17:57:02.697 | INFO     | 24623:140141257825216 | log:info:144 - 
+Text: «всю країну а чекає закриє храм»
+2025-11-07 17:57:02.698 | ERROR    | 24623:140141257825216 | log:error:146 - ERR: no_intent
+2025-11-07 17:57:06.478 | INFO     | 24623:140141257825216 | log:info:144 - 
+Text: «храм був закритий»
+2025-11-07 17:57:06.726 | INFO     | 24623:140141257825216 | log:info:144 - intent=app.close slots={'app': 'chromium'} conf=0.56
+2025-11-07 17:57:06.726 | INFO     | 24623:140141257825216 | log:info:144 - action: {'ok': True, 'intent': 'app.close', 'value': 'chromium', 'matched_pids': [8440, 8442, 8444, 8448, 8449, 8451, 8478, 8480, 8483, 8624, 8634, 13916, 21458, 21483, 21510, 21531, 21935, 21947, 21980, 21989, 22048, 22268, 22301, 22314, 22376, 22403, 22418, 22428, 22453, 25219, 25230], 'terminated': [8440, 8442, 8444, 8448, 8449, 8451, 8478, 8480, 8483, 8624, 8634, 13916, 21458, 21483, 21510, 21531, 21935, 21947, 21980, 21989, 22048, 22268, 22301, 22314, 22376, 22403, 22418, 22428, 22453, 25219, 25230], 'killed': [], 'still_alive': [], 'used_window_close': False, 'scanned': 269}
+2025-11-07 17:57:06.727 | INFO     | 24623:140141257825216 | log:info:144 - reply: Готово.
+2025-11-07 17:57:12.248 | INFO     | 24623:140141257825216 | log:info:144 - 
+Text: «включає телеграм»
+2025-11-07 17:57:12.249 | ERROR    | 24623:140141257825216 | log:error:146 - ERR: no_intent
+2025-11-07 17:57:17.742 | INFO     | 24623:140141257825216 | log:info:144 - 
+Text: «запустити телеграм»
+2025-11-07 17:57:17.746 | INFO     | 24623:140141257825216 | log:info:144 - intent=app.open slots={'app': 'Telegram'} conf=0.6923076923076923
+2025-11-07 17:57:17.746 | INFO     | 24623:140141257825216 | log:info:144 - action: {'ok': True, 'launched': ['Telegram']}
+2025-11-07 17:57:17.746 | INFO     | 24623:140141257825216 | log:info:144 - reply: Відкриваю Telegram.
+2025-11-07 17:57:27.877 | INFO     | 24623:140141257825216 | log:info:144 - 
+Text: «тут»
+2025-11-07 17:57:27.879 | ERROR    | 24623:140141257825216 | log:error:146 - ERR: None
+2025-11-07 17:57:43.100 | INFO     | 24623:140141257825216 | log:info:144 - 
+Text: «районі»
+2025-11-07 17:57:43.103 | ERROR    | 24623:140141257825216 | log:error:146 - ERR: no_intent
+2025-11-07 17:57:50.087 | INFO     | 24623:140141257825216 | log:info:144 - 
+Text: «сказала уляся»
+2025-11-07 17:57:50.089 | ERROR    | 24623:140141257825216 | log:error:146 - ERR: no_intent
+2025-11-07 17:57:55.755 | INFO     | 24623:140141257825216 | log:info:144 - 
+Text: «хороша ідея»
+2025-11-07 17:57:55.757 | ERROR    | 24623:140141257825216 | log:error:146 - ERR: no_intent
+2025-11-07 17:58:00.826 | INFO     | 24623:140141257825216 | log:info:144 - 
+Text: «реж»
+2025-11-07 17:58:00.828 | ERROR    | 24623:140141257825216 | log:error:146 - ERR: no_intent
+2025-11-07 17:58:53.815 | INFO     | 24623:140141257825216 | log:info:144 - 
+Text: «декілька»
+2025-11-07 17:58:53.817 | ERROR    | 24623:140141257825216 | log:error:146 - ERR: no_intent
+2025-11-07 17:58:58.993 | INFO     | 24623:140141257825216 | log:info:144 - 
+Text: «сотка»
+2025-11-07 17:58:58.995 | ERROR    | 24623:140141257825216 | log:error:146 - ERR: None
+2025-11-07 17:59:04.073 | INFO     | 24623:140141257825216 | log:info:144 - 
+Text: «стати поліції»
+2025-11-07 17:59:04.076 | ERROR    | 24623:140141257825216 | log:error:146 - ERR: no_intent
+2025-11-07 17:59:13.991 | INFO     | 24623:140141257825216 | log:info:144 - 
+Text: «красна»
+2025-11-07 17:59:13.994 | ERROR    | 24623:140141257825216 | log:error:146 - ERR: no_intent
+2025-11-07 17:59:29.101 | INFO     | 24623:140141257825216 | log:info:144 - 
+Text: «комусь»
+2025-11-07 17:59:29.103 | ERROR    | 24623:140141257825216 | log:error:146 - ERR: no_intent
+2025-11-07 17:59:49.323 | INFO     | 24623:140141257825216 | log:info:144 - 
+Text: «тільки»
+2025-11-07 17:59:49.325 | ERROR    | 24623:140141257825216 | log:error:146 - ERR: None
+2025-11-07 18:00:24.516 | INFO     | 24623:140141257825216 | log:info:144 - 
+Text: «тридцять»
+2025-11-07 18:00:24.518 | ERROR    | 24623:140141257825216 | log:error:146 - ERR: no_intent
+2025-11-07 18:00:28.440 | INFO     | 24623:140141257825216 | log:info:144 - 
+Text: «повторні»
+2025-11-07 18:00:28.441 | ERROR    | 24623:140141257825216 | log:error:146 - ERR: no_intent
+2025-11-07 18:00:53.605 | INFO     | 24623:140141257825216 | log:info:144 - 
+Text: «харків»
+2025-11-07 18:00:53.607 | ERROR    | 24623:140141257825216 | log:error:146 - ERR: no_intent
+2025-11-07 18:01:54.050 | INFO     | 24623:140141257825216 | log:info:144 - 
+Text: «найбільш»
+2025-11-07 18:01:54.052 | ERROR    | 24623:140141257825216 | log:error:146 - ERR: no_intent
+2025-11-07 18:02:49.576 | INFO     | 24623:140141257825216 | log:info:144 - 
+Text: «що шість»
+2025-11-07 18:02:49.578 | ERROR    | 24623:140141257825216 | log:error:146 - ERR: no_intent
+2025-11-07 18:03:09.637 | INFO     | 24623:140141257825216 | log:info:144 - 
+Text: «дітей»
+2025-11-07 18:03:09.639 | ERROR    | 24623:140141257825216 | log:error:146 - ERR: no_intent
+2025-11-07 18:03:14.687 | INFO     | 24623:140141257825216 | log:info:144 - 
+Text: «сума»
+2025-11-07 18:03:14.690 | ERROR    | 24623:140141257825216 | log:error:146 - ERR: no_intent
+2025-11-07 18:03:44.962 | INFO     | 24623:140141257825216 | log:info:144 - 
+Text: «тепер виставляв»
+2025-11-07 18:03:44.964 | ERROR    | 24623:140141257825216 | log:error:146 - ERR: no_intent
+2025-11-07 18:04:00.033 | INFO     | 24623:140141257825216 | log:info:144 - 
+Text: «рунчакові»
+2025-11-07 18:04:00.035 | ERROR    | 24623:140141257825216 | log:error:146 - ERR: no_intent
+2025-11-07 18:04:06.129 | INFO     | 24623:140141257825216 | log:info:144 - 
+Text: «какашка»
+2025-11-07 18:04:06.132 | ERROR    | 24623:140141257825216 | log:error:146 - ERR: no_intent
+2025-11-07 18:04:51.437 | INFO     | 24623:140141257825216 | log:info:144 - 
+Text: «однак»
+2025-11-07 18:04:51.439 | ERROR    | 24623:140141257825216 | log:error:146 - ERR: None
+2025-11-07 18:05:41.548 | INFO     | 24623:140141257825216 | log:info:144 - 
+Text: «вісім»
+2025-11-07 18:05:41.550 | ERROR    | 24623:140141257825216 | log:error:146 - ERR: no_intent
+2025-11-07 18:05:46.633 | INFO     | 24623:140141257825216 | log:info:144 - 
+Text: «пісюн»
+2025-11-07 18:05:46.635 | ERROR    | 24623:140141257825216 | log:error:146 - ERR: no_intent
+2025-11-07 18:05:51.659 | INFO     | 24623:140141257825216 | log:info:144 - 
+Text: «сейму»
+2025-11-07 18:05:51.661 | ERROR    | 24623:140141257825216 | log:error:146 - ERR: no_intent

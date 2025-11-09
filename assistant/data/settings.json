@@ -1,5 +1,5 @@
 {
-  "stt_device": "7",
+  "stt_device": "pulse",
   "tts_voice": "default",
   "locale": "uk-UA",
   "openai_key": ""

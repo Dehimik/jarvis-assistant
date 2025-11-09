@@ -19,6 +19,13 @@ from assistant.telemetry.log import setup_logger
 from assistant.config.resolver import ConfigResolver
 from assistant.audio.recorder import recorder_ctx
 
+# PATH
+HERE = Path(__file__).resolve().parent           # assistant/
+REPO = HERE.parent                               # корінь репо (де assistant/ та gui/)
+DEFAULT_CONFIG = HERE / "config" / "config.yaml" # assistant/config/config.yaml
+DEFAULT_PLUGINS = REPO / "configs" / "plugins.d" / "voice"
+LOG_FILE = REPO / "assistant" / "data" / "jarvis.log"
+
 # helpers
 def play_pcm_s16le(data: bytes, sample_rate: int = 22050):
     """PLay PCM s16le from bytes"""
@@ -44,6 +51,18 @@ def list_input_devices() -> None:
             sr = int(dev.get("default_samplerate", 0))
             print(f"[{idx}] {dev.get('name','?')}  (in: {dev.get('max_input_channels')}, sr: {sr})")
 
+def _resolve_path(p: str | Path, *fallbacks: Path) -> Path:
+    p = Path(p)
+    if p.is_absolute():
+        return p
+    # перевіряємо кілька кандидатів: CWD, поруч із main.py, корінь репо та фолбеки
+    candidates = [Path.cwd() / p, HERE / p, REPO / p, *fallbacks]
+    for c in candidates:
+        if c.exists():
+            return c
+    # якщо нічого не знайшли — повернемо шлях біля main.py (щоб було передбачувано)
+    return (HERE / p)
+
 # server runner
 def run_daemon(host: str = "127.0.0.1", port: int = 8000):
     uvicorn.run("assistant.bus.server:app", host=host, port=port, reload=False, workers=1)
@@ -55,8 +74,8 @@ def main():
 
     # --- voice listen ---
     listen_p = sub.add_parser("listen", help="Run continuous listening loop")
-    listen_p.add_argument("--config", type=str, default="assistant/config/config.yaml")
-    listen_p.add_argument("--plugins-dir", type=str, default="configs/plugins.d/voice")
+    listen_p.add_argument("--config", type=str, default=str(DEFAULT_CONFIG))
+    listen_p.add_argument("--plugins-dir", type=str, default=str(DEFAULT_PLUGINS))
     listen_p.add_argument("--url", type=str, default="http://127.0.0.1:8000")
     listen_p.add_argument("--list-devices", action="store_true", help="List audio input devices and exit")
     listen_p.add_argument("--device", type=str, default=None, help="microphone device name or index")
@@ -85,6 +104,8 @@ async def run_listen(args):
     5) Відтворює TTS (опційно), обробляє exit-фрази
     """
 
+    cfg_path = _resolve_path(args.config, DEFAULT_CONFIG)
+    plugins_dir = _resolve_path(args.plugins_dir, DEFAULT_PLUGINS)
 
     log = setup_logger("jarvis", level="INFO", env="dev", serialize=False)
     log.info("🎙️  Jarvis is starting...")
@@ -97,7 +118,7 @@ async def run_listen(args):
         return
 
     # download plugins from yaml
-    resolver = ConfigResolver(config_path=args.config, plugins_dir=args.plugins_dir)
+    resolver = ConfigResolver(config_path=cfg_path, plugins_dir=plugins_dir)
     try:
         plugins = resolver.resolve_all()
     except Exception as e:
@@ -135,7 +156,7 @@ async def run_listen(args):
                 if not text:
                     continue
 
-                log.info(f"\nРозпізнано: «{text}»")
+                log.info(f"\nText: «{text}»")
 
                 # exit phrases
                 if any(text.endswith(p) or text == p for p in exit_phrases):
@@ -150,17 +171,17 @@ async def run_listen(args):
                     continue
 
                 if not nlu.get("ok"):
-                    log.error("ERR:", nlu.get("error"))
+                    log.error(f"ERR: {nlu.get("error")}")
                     continue
 
                 if args.print_intents:
                     log.info(f"intent={nlu['intent']} slots={nlu['slots']} conf={nlu['confidence']}")
 
                 if "action" in nlu:
-                    log.info("action:", nlu["action"])
+                    log.info(f"action: {nlu["action"]}")
 
                 if "reply" in nlu:
-                    log.info("reply:", nlu["reply"])
+                    log.info(f"reply: {nlu["reply"]}")
 
                 if args.say_ok:
                     reply = nlu.get("reply")

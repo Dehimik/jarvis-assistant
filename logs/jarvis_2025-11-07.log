@@ -1,0 +1,41 @@
+2025-11-07 14:17:50.738 | INFO     | assistant.telemetry.log:info:134 - 🎙️  Jarvis is starting...
+2025-11-07 14:18:03.724 | INFO     | assistant.telemetry.log:info:134 - Listening... (Ctrl+C for exit)
+2025-11-07 14:18:03.725 | INFO     | assistant.telemetry.log:info:134 - Device: pulse | STT=VoskUkPlugin
+2025-11-07 14:18:07.967 | INFO     | assistant.telemetry.log:info:134 - 
+Text: «відкритого грам»
+2025-11-07 14:18:07.989 | INFO     | assistant.telemetry.log:info:134 - intent=app.open slots={'app': 'Telegram'} conf=0.56
+2025-11-07 14:18:07.990 | INFO     | assistant.telemetry.log:info:134 - action: {'ok': True, 'launched': ['Telegram']}
+2025-11-07 14:18:07.990 | INFO     | assistant.telemetry.log:info:134 - reply: Відкриваю Telegram.
+2025-11-07 14:18:13.008 | INFO     | assistant.telemetry.log:info:134 - 
+Text: «колеги»
+2025-11-07 14:18:13.011 | ERROR    | assistant.telemetry.log:error:136 - ERR: no_intent
+2025-11-07 14:18:15.586 | INFO     | assistant.telemetry.log:info:134 - 
+Завершення…
+2025-11-07 14:19:21.019 | INFO     | assistant.telemetry.log:info:134 - 🎙️  Jarvis is starting...
+2025-11-07 14:19:23.742 | INFO     | assistant.telemetry.log:info:134 - Listening... (Ctrl+C for exit)
+2025-11-07 14:19:23.742 | INFO     | assistant.telemetry.log:info:134 - Device: pulse | STT=VoskUkPlugin
+2025-11-07 14:19:30.133 | INFO     | assistant.telemetry.log:info:134 - 
+Text: «відкритого храм»
+2025-11-07 14:19:30.149 | INFO     | assistant.telemetry.log:info:134 - intent=app.open slots={'app': 'chromium'} conf=0.56
+2025-11-07 14:19:30.149 | INFO     | assistant.telemetry.log:info:134 - action: {'ok': True, 'launched': ['chromium']}
+2025-11-07 14:19:30.150 | INFO     | assistant.telemetry.log:info:134 - reply: Відкриваю chromium.
+2025-11-07 14:19:34.450 | INFO     | assistant.telemetry.log:info:134 - 
+Text: «закриє хром»
+2025-11-07 14:19:34.572 | INFO     | assistant.telemetry.log:info:134 - intent=app.close slots={'app': 'chromium'} conf=0.6
+2025-11-07 14:19:34.573 | INFO     | assistant.telemetry.log:info:134 - action: {'ok': True, 'intent': 'app.close', 'value': 'chromium', 'matched_pids': [2007, 2009, 2011, 2016, 2017, 2020, 2060, 2067, 2083, 2212, 2227, 2343, 2375, 7779, 7792, 7806], 'terminated': [2007, 2009, 2011, 2016, 2017, 2020, 2060, 2067, 2083, 2212, 2227, 2343, 2375, 7779, 7792, 7806], 'killed': [], 'still_alive': [], 'used_window_close': False, 'scanned': 259}
+2025-11-07 14:19:34.573 | INFO     | assistant.telemetry.log:info:134 - reply: Готово.
+2025-11-07 14:19:39.461 | INFO     | assistant.telemetry.log:info:134 - 
+Text: «відкрий телеграм»
+2025-11-07 14:19:39.465 | INFO     | assistant.telemetry.log:info:134 - intent=app.open slots={'app': 'Telegram'} conf=0.6363636363636364
+2025-11-07 14:19:39.465 | INFO     | assistant.telemetry.log:info:134 - action: {'ok': True, 'launched': ['Telegram']}
+2025-11-07 14:19:39.465 | INFO     | assistant.telemetry.log:info:134 - reply: Відкриваю Telegram.
+2025-11-07 14:19:43.064 | INFO     | assistant.telemetry.log:info:134 - 
+Text: «зокрема телеграм»
+2025-11-07 14:19:43.067 | ERROR    | assistant.telemetry.log:error:136 - ERR: no_intent
+2025-11-07 14:19:46.484 | INFO     | assistant.telemetry.log:info:134 - 
+Text: «телеграм закриті»
+2025-11-07 14:19:46.524 | INFO     | assistant.telemetry.log:info:134 - intent=app.close slots={'app': 'Telegram'} conf=0.5217391304347826
+2025-11-07 14:19:46.524 | INFO     | assistant.telemetry.log:info:134 - action: {'ok': True, 'intent': 'app.close', 'value': 'Telegram', 'matched_pids': [6654, 7827], 'terminated': [6654, 7827], 'killed': [], 'still_alive': [], 'used_window_close': False, 'scanned': 244}
+2025-11-07 14:19:46.525 | INFO     | assistant.telemetry.log:info:134 - reply: Готово.
+2025-11-07 14:19:58.235 | INFO     | assistant.telemetry.log:info:134 - 
+Завершення…

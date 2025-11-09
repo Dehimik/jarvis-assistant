@@ -7,19 +7,40 @@ import vosk
 from assistant.audio.stt.base import STTPlugin
 from assistant.audio.stt.registry import register
 
-def _resolve_vosk_model_dir(base: str | Path) -> Path:
-    # search for model dir
-    p = Path(base).resolve()
-    if (p / "am").is_dir() and (p / "conf").is_dir():
-        return p
-    candidates = [d for d in p.iterdir() if d.is_dir()]
-    for d in candidates:
-        if (d / "am").is_dir() and (d / "conf").is_dir():
-            return d
+HERE = Path(__file__).resolve().parent
+REPO = HERE.parents[2]
+ASSISTANT_DIR = REPO / "assistant"
+
+def _resolve_vosk_model_dir(model_path: str) -> Path:
+    p = Path(model_path)
+
+    # 1) абсолютний шлях — відразу
+    if p.is_absolute():
+        if p.exists():
+            return p
+        raise FileNotFoundError(f"Vosk model path (absolute) not found: {p}")
+
+    # 2) кандидати для відносного шляху
+    candidates = [
+        Path.cwd() / p,            # поточний робочий каталог (виклик процесу)
+        ASSISTANT_DIR / p,         # ../assistant/<model_path>
+        REPO / p,             # корінь репо / <model_path>
+        HERE / p,                  # поруч із плагіном (configs/...)
+    ]
+
+    tried = []
+    for c in candidates:
+        c = c.resolve()
+        tried.append(str(c))
+        if c.exists():
+            # знайшли — якщо це директорія з моделлю, повертаємо її
+            # (можна додатково перевірити наявність файлів 'model.conf' або similar)
+            return c
+
+    # якщо не знайшли — кинемо детальну помилку з підказкою
     raise FileNotFoundError(
-        f"Vosk model dir not found under {p}. "
-        f"Expecting subfolders like 'am/' and 'conf/'. "
-        f"Found: {[c.name for c in candidates]}"
+        "Vosk model not found. Tried these locations:\n  - " + "\n  - ".join(tried) +
+        "\nPut your model folder (e.g. vosk-model-uk-v3) in one of them or set model_path to an absolute path."
     )
 
 @register("vosk_uk_v3")

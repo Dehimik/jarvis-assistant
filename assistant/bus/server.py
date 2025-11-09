@@ -19,9 +19,11 @@ from assistant.nlu import NLU
 from assistant.plugins.manager import PluginManager
 
 # paths
-ROOT = Path(".").resolve()
+ROOT = Path(__file__).resolve().parents[2]
 CONFIGS = ROOT / "configs"
 CONFIGS.mkdir(exist_ok=True)
+
+CONFIG_FILE = ROOT / "assistant/config/config.yaml"
 
 PLUGINS_DIR = CONFIGS / "plugins.d"    # маніфести/плагіни
 PLUGINS_DIR.mkdir(parents=True, exist_ok=True)
@@ -59,8 +61,7 @@ class JarvisRunner:
     def start(
         self,
         *,
-        url: str = "http://127.0.0.1:8000",
-        config: str = "assistant/config/config.yaml",
+        config: str = CONFIG_FILE,
         plugins_dir: str = PLUGINS_DIR / "voice",
         device: str | int | None = None,
         frame: int = 512,
@@ -71,10 +72,8 @@ class JarvisRunner:
             return
 
         args = [
-            self._python, "-u", "-m", "assistant.cli.main",
-            "--url", url,
+            self._python, "-u", "-m", "assistant.main",
             "listen",
-            "--config", config,
             "--plugins-dir", plugins_dir,
             "--frame", str(frame),
         ]
@@ -87,6 +86,7 @@ class JarvisRunner:
 
         env = os.environ.copy()
         env["PYTHONUNBUFFERED"] = "1"
+        env["JARVIS_CAPTURE_STDOUT"] = "1"
 
         # Читаємо stdout у батьківському процесі:
         self._proc = subprocess.Popen(
@@ -96,6 +96,7 @@ class JarvisRunner:
             text=True,
             bufsize=1,  # line-buffered reader у батька
             env=env,
+            cwd=str(ROOT),
         )
 
         self._stop_evt.clear()
@@ -239,8 +240,6 @@ def toggle_status(patch: TogglePatch):
             try:
                 s = read_settings().dict()
                 app.state.jarvis.start(
-                    url="http://127.0.0.1:8000",
-                    config="assistant/config/config.yaml",
                     plugins_dir="configs/plugins.d/voice",
                     device=s.get("stt_device"),
                     frame=512,

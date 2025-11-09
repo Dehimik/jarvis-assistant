@@ -262,3 +262,439 @@ You can install "python-multipart" with:
 
 pip install python-multipart
 
+2025-11-05 23:13:29.582 | ERROR    | assistant.telemetry.log:exception:137 - Config file not found: jarvis/assistant/config/config.yaml
+Traceback (most recent call last):
+
+  File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/.venv/bin/va-cli", line 10, in <module>
+    sys.exit(main())
+    │   │    └ <function main at 0x7f891c193920>
+    │   └ <built-in function exit>
+    └ <module 'sys' (built-in)>
+  File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/.venv/lib/python3.13/site-packages/assistant/main.py", line 70, in main
+    asyncio.run(run_listen(args))
+    │       │   │          └ Namespace(cmd='listen', config='jarvis/assistant/config/config.yaml', plugins_dir='configs/plugins.d/voice', url='http://127....
+    │       │   └ <function run_listen at 0x7f891c1939c0>
+    │       └ <function run at 0x7f893bd898a0>
+    └ <module 'asyncio' from '/usr/lib/python3.13/asyncio/__init__.py'>
+  File "/usr/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           │      │   └ <coroutine object run_listen at 0x7f891c23fdc0>
+           │      └ <function Runner.run at 0x7f893b3efec0>
+           └ <asyncio.runners.Runner object at 0x7f891c13aa50>
+  File "/usr/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           │    │     │                  └ <Task pending name='Task-1' coro=<run_listen() running at /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/.venv/lib/python3....
+           │    │     └ <function BaseEventLoop.run_until_complete at 0x7f893b3eda80>
+           │    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+           └ <asyncio.runners.Runner object at 0x7f891c13aa50>
+  File "/usr/lib/python3.13/asyncio/base_events.py", line 712, in run_until_complete
+    self.run_forever()
+    │    └ <function BaseEventLoop.run_forever at 0x7f893b3ed9e0>
+    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+  File "/usr/lib/python3.13/asyncio/base_events.py", line 683, in run_forever
+    self._run_once()
+    │    └ <function BaseEventLoop._run_once at 0x7f893b3ef7e0>
+    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+  File "/usr/lib/python3.13/asyncio/base_events.py", line 2050, in _run_once
+    handle._run()
+    │      └ <function Handle._run at 0x7f893b32a8e0>
+    └ <Handle <_asyncio.TaskStepMethWrapper object at 0x7f891f9b1cf0>()>
+  File "/usr/lib/python3.13/asyncio/events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+    │    │            │    │           │    └ <member '_args' of 'Handle' objects>
+    │    │            │    │           └ <Handle <_asyncio.TaskStepMethWrapper object at 0x7f891f9b1cf0>()>
+    │    │            │    └ <member '_callback' of 'Handle' objects>
+    │    │            └ <Handle <_asyncio.TaskStepMethWrapper object at 0x7f891f9b1cf0>()>
+    │    └ <member '_context' of 'Handle' objects>
+    └ <Handle <_asyncio.TaskStepMethWrapper object at 0x7f891f9b1cf0>()>
+> File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/.venv/lib/python3.13/site-packages/assistant/main.py", line 102, in run_listen
+    plugins = resolver.resolve_all()
+              │        └ <function ConfigResolver.resolve_all at 0x7f891c193060>
+              └ <assistant.config.resolver.ConfigResolver object at 0x7f891c1cc980>
+  File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/.venv/lib/python3.13/site-packages/assistant/config/resolver.py", line 45, in resolve_all
+    self.load()
+    │    └ <function ConfigResolver.load at 0x7f891c192e80>
+    └ <assistant.config.resolver.ConfigResolver object at 0x7f891c1cc980>
+  File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/.venv/lib/python3.13/site-packages/assistant/config/resolver.py", line 19, in load
+    raise FileNotFoundError(f"Config file not found: {self.config_path}")
+                                                      │    └ PosixPath('jarvis/assistant/config/config.yaml')
+                                                      └ <assistant.config.resolver.ConfigResolver object at 0x7f891c1cc980>
+
+FileNotFoundError: Config file not found: jarvis/assistant/config/config.yaml
+2025-11-05 23:14:50.708 | ERROR    | assistant.telemetry.log:exception:137 - Config file not found: jarvis/assistant/config/config.yaml
+Traceback (most recent call last):
+
+  File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/.venv/bin/va-cli", line 10, in <module>
+    sys.exit(main())
+    │   │    └ <function main at 0x7fe93018f920>
+    │   └ <built-in function exit>
+    └ <module 'sys' (built-in)>
+  File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/.venv/lib/python3.13/site-packages/assistant/main.py", line 70, in main
+    asyncio.run(run_listen(args))
+    │       │   │          └ Namespace(cmd='listen', config='jarvis/assistant/config/config.yaml', plugins_dir='configs/plugins.d/voice', url='http://127....
+    │       │   └ <function run_listen at 0x7fe93018f9c0>
+    │       └ <function run at 0x7fe9502898a0>
+    └ <module 'asyncio' from '/usr/lib/python3.13/asyncio/__init__.py'>
+  File "/usr/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           │      │   └ <coroutine object run_listen at 0x7fe93023bdc0>
+           │      └ <function Runner.run at 0x7fe94f8ebec0>
+           └ <asyncio.runners.Runner object at 0x7fe930136a50>
+  File "/usr/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           │    │     │                  └ <Task pending name='Task-1' coro=<run_listen() running at /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/.venv/lib/python3....
+           │    │     └ <function BaseEventLoop.run_until_complete at 0x7fe94f8e9a80>
+           │    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+           └ <asyncio.runners.Runner object at 0x7fe930136a50>
+  File "/usr/lib/python3.13/asyncio/base_events.py", line 712, in run_until_complete
+    self.run_forever()
+    │    └ <function BaseEventLoop.run_forever at 0x7fe94f8e99e0>
+    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+  File "/usr/lib/python3.13/asyncio/base_events.py", line 683, in run_forever
+    self._run_once()
+    │    └ <function BaseEventLoop._run_once at 0x7fe94f8eb7e0>
+    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+  File "/usr/lib/python3.13/asyncio/base_events.py", line 2050, in _run_once
+    handle._run()
+    │      └ <function Handle._run at 0x7fe94f8268e0>
+    └ <Handle <_asyncio.TaskStepMethWrapper object at 0x7fe930236f20>()>
+  File "/usr/lib/python3.13/asyncio/events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+    │    │            │    │           │    └ <member '_args' of 'Handle' objects>
+    │    │            │    │           └ <Handle <_asyncio.TaskStepMethWrapper object at 0x7fe930236f20>()>
+    │    │            │    └ <member '_callback' of 'Handle' objects>
+    │    │            └ <Handle <_asyncio.TaskStepMethWrapper object at 0x7fe930236f20>()>
+    │    └ <member '_context' of 'Handle' objects>
+    └ <Handle <_asyncio.TaskStepMethWrapper object at 0x7fe930236f20>()>
+> File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/.venv/lib/python3.13/site-packages/assistant/main.py", line 102, in run_listen
+    plugins = resolver.resolve_all()
+              │        └ <function ConfigResolver.resolve_all at 0x7fe93018f060>
+              └ <assistant.config.resolver.ConfigResolver object at 0x7fe9301c8980>
+  File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/.venv/lib/python3.13/site-packages/assistant/config/resolver.py", line 45, in resolve_all
+    self.load()
+    │    └ <function ConfigResolver.load at 0x7fe93018ee80>
+    └ <assistant.config.resolver.ConfigResolver object at 0x7fe9301c8980>
+  File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/.venv/lib/python3.13/site-packages/assistant/config/resolver.py", line 19, in load
+    raise FileNotFoundError(f"Config file not found: {self.config_path}")
+                                                      │    └ PosixPath('jarvis/assistant/config/config.yaml')
+                                                      └ <assistant.config.resolver.ConfigResolver object at 0x7fe9301c8980>
+
+FileNotFoundError: Config file not found: jarvis/assistant/config/config.yaml
+2025-11-05 23:15:53.752 | ERROR    | assistant.telemetry.log:exception:137 - Config file not found: jarvis/assistant/config/config.yaml
+Traceback (most recent call last):
+
+  File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/.venv/bin/va-cli", line 10, in <module>
+    sys.exit(main())
+    │   │    └ <function main at 0x7ff904f9b920>
+    │   └ <built-in function exit>
+    └ <module 'sys' (built-in)>
+  File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/.venv/lib/python3.13/site-packages/assistant/main.py", line 70, in main
+    asyncio.run(run_listen(args))
+    │       │   │          └ Namespace(cmd='listen', config='jarvis/assistant/config/config.yaml', plugins_dir='configs/plugins.d/voice', url='http://127....
+    │       │   └ <function run_listen at 0x7ff904f9b9c0>
+    │       └ <function run at 0x7ff9250898a0>
+    └ <module 'asyncio' from '/usr/lib/python3.13/asyncio/__init__.py'>
+  File "/usr/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           │      │   └ <coroutine object run_listen at 0x7ff905547dc0>
+           │      └ <function Runner.run at 0x7ff924687ec0>
+           └ <asyncio.runners.Runner object at 0x7ff904f42a50>
+  File "/usr/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           │    │     │                  └ <Task pending name='Task-1' coro=<run_listen() running at /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/.venv/lib/python3....
+           │    │     └ <function BaseEventLoop.run_until_complete at 0x7ff924685a80>
+           │    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+           └ <asyncio.runners.Runner object at 0x7ff904f42a50>
+  File "/usr/lib/python3.13/asyncio/base_events.py", line 712, in run_until_complete
+    self.run_forever()
+    │    └ <function BaseEventLoop.run_forever at 0x7ff9246859e0>
+    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+  File "/usr/lib/python3.13/asyncio/base_events.py", line 683, in run_forever
+    self._run_once()
+    │    └ <function BaseEventLoop._run_once at 0x7ff9246877e0>
+    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+  File "/usr/lib/python3.13/asyncio/base_events.py", line 2050, in _run_once
+    handle._run()
+    │      └ <function Handle._run at 0x7ff9245c28e0>
+    └ <Handle <_asyncio.TaskStepMethWrapper object at 0x7ff908735930>()>
+  File "/usr/lib/python3.13/asyncio/events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+    │    │            │    │           │    └ <member '_args' of 'Handle' objects>
+    │    │            │    │           └ <Handle <_asyncio.TaskStepMethWrapper object at 0x7ff908735930>()>
+    │    │            │    └ <member '_callback' of 'Handle' objects>
+    │    │            └ <Handle <_asyncio.TaskStepMethWrapper object at 0x7ff908735930>()>
+    │    └ <member '_context' of 'Handle' objects>
+    └ <Handle <_asyncio.TaskStepMethWrapper object at 0x7ff908735930>()>
+> File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/.venv/lib/python3.13/site-packages/assistant/main.py", line 102, in run_listen
+    plugins = resolver.resolve_all()
+              │        └ <function ConfigResolver.resolve_all at 0x7ff904f9b060>
+              └ <assistant.config.resolver.ConfigResolver object at 0x7ff904fd4980>
+  File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/.venv/lib/python3.13/site-packages/assistant/config/resolver.py", line 45, in resolve_all
+    self.load()
+    │    └ <function ConfigResolver.load at 0x7ff904f9ae80>
+    └ <assistant.config.resolver.ConfigResolver object at 0x7ff904fd4980>
+  File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/.venv/lib/python3.13/site-packages/assistant/config/resolver.py", line 19, in load
+    raise FileNotFoundError(f"Config file not found: {self.config_path}")
+                                                      │    └ PosixPath('jarvis/assistant/config/config.yaml')
+                                                      └ <assistant.config.resolver.ConfigResolver object at 0x7ff904fd4980>
+
+FileNotFoundError: Config file not found: jarvis/assistant/config/config.yaml
+2025-11-05 23:35:45.676 | ERROR    | assistant.telemetry.log:exception:137 - Config file not found: jarvis/assistant/config/config.yaml
+Traceback (most recent call last):
+
+  File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/.venv/bin/va-cli", line 10, in <module>
+    sys.exit(main())
+    │   │    └ <function main at 0x7ffb300a3920>
+    │   └ <built-in function exit>
+    └ <module 'sys' (built-in)>
+  File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/.venv/lib/python3.13/site-packages/assistant/main.py", line 70, in main
+    asyncio.run(run_listen(args))
+    │       │   │          └ Namespace(cmd='listen', config='jarvis/assistant/config/config.yaml', plugins_dir='configs/plugins.d/voice', url='http://127....
+    │       │   └ <function run_listen at 0x7ffb300a39c0>
+    │       └ <function run at 0x7ffb4fb898a0>
+    └ <module 'asyncio' from '/usr/lib/python3.13/asyncio/__init__.py'>
+  File "/usr/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           │      │   └ <coroutine object run_listen at 0x7ffb3014fdc0>
+           │      └ <function Runner.run at 0x7ffb4f18bec0>
+           └ <asyncio.runners.Runner object at 0x7ffb3004aa50>
+  File "/usr/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           │    │     │                  └ <Task pending name='Task-1' coro=<run_listen() running at /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/.venv/lib/python3....
+           │    │     └ <function BaseEventLoop.run_until_complete at 0x7ffb4f189a80>
+           │    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+           └ <asyncio.runners.Runner object at 0x7ffb3004aa50>
+  File "/usr/lib/python3.13/asyncio/base_events.py", line 712, in run_until_complete
+    self.run_forever()
+    │    └ <function BaseEventLoop.run_forever at 0x7ffb4f1899e0>
+    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+  File "/usr/lib/python3.13/asyncio/base_events.py", line 683, in run_forever
+    self._run_once()
+    │    └ <function BaseEventLoop._run_once at 0x7ffb4f18b7e0>
+    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+  File "/usr/lib/python3.13/asyncio/base_events.py", line 2050, in _run_once
+    handle._run()
+    │      └ <function Handle._run at 0x7ffb4f0c68e0>
+    └ <Handle <_asyncio.TaskStepMethWrapper object at 0x7ffb3394f970>()>
+  File "/usr/lib/python3.13/asyncio/events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+    │    │            │    │           │    └ <member '_args' of 'Handle' objects>
+    │    │            │    │           └ <Handle <_asyncio.TaskStepMethWrapper object at 0x7ffb3394f970>()>
+    │    │            │    └ <member '_callback' of 'Handle' objects>
+    │    │            └ <Handle <_asyncio.TaskStepMethWrapper object at 0x7ffb3394f970>()>
+    │    └ <member '_context' of 'Handle' objects>
+    └ <Handle <_asyncio.TaskStepMethWrapper object at 0x7ffb3394f970>()>
+> File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/.venv/lib/python3.13/site-packages/assistant/main.py", line 102, in run_listen
+    plugins = resolver.resolve_all()
+              │        └ <function ConfigResolver.resolve_all at 0x7ffb300a3060>
+              └ <assistant.config.resolver.ConfigResolver object at 0x7ffb300dc980>
+  File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/.venv/lib/python3.13/site-packages/assistant/config/resolver.py", line 45, in resolve_all
+    self.load()
+    │    └ <function ConfigResolver.load at 0x7ffb300a2e80>
+    └ <assistant.config.resolver.ConfigResolver object at 0x7ffb300dc980>
+  File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/.venv/lib/python3.13/site-packages/assistant/config/resolver.py", line 19, in load
+    raise FileNotFoundError(f"Config file not found: {self.config_path}")
+                                                      │    └ PosixPath('jarvis/assistant/config/config.yaml')
+                                                      └ <assistant.config.resolver.ConfigResolver object at 0x7ffb300dc980>
+
+FileNotFoundError: Config file not found: jarvis/assistant/config/config.yaml
+2025-11-05 23:39:28.357 | ERROR    | assistant.telemetry.log:exception:137 - Config file not found: config/config.yaml
+Traceback (most recent call last):
+
+  File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/.venv/bin/va-cli", line 10, in <module>
+    sys.exit(main())
+    │   │    └ <function main at 0x7f5fd218f920>
+    │   └ <built-in function exit>
+    └ <module 'sys' (built-in)>
+  File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/.venv/lib/python3.13/site-packages/assistant/main.py", line 70, in main
+    asyncio.run(run_listen(args))
+    │       │   │          └ Namespace(cmd='listen', config='config/config.yaml', plugins_dir='configs/plugins.d/voice', url='http://127.0.0.1:8000', list...
+    │       │   └ <function run_listen at 0x7f5fd218f9c0>
+    │       └ <function run at 0x7f600b3ae020>
+    └ <module 'asyncio' from '/usr/lib/python3.13/asyncio/__init__.py'>
+  File "/usr/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           │      │   └ <coroutine object run_listen at 0x7f5fe5d3fdc0>
+           │      └ <function Runner.run at 0x7f600a9efec0>
+           └ <asyncio.runners.Runner object at 0x7f5fd2136a50>
+  File "/usr/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           │    │     │                  └ <Task pending name='Task-1' coro=<run_listen() running at /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/.venv/lib/python3....
+           │    │     └ <function BaseEventLoop.run_until_complete at 0x7f600a9eda80>
+           │    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+           └ <asyncio.runners.Runner object at 0x7f5fd2136a50>
+  File "/usr/lib/python3.13/asyncio/base_events.py", line 712, in run_until_complete
+    self.run_forever()
+    │    └ <function BaseEventLoop.run_forever at 0x7f600a9ed9e0>
+    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+  File "/usr/lib/python3.13/asyncio/base_events.py", line 683, in run_forever
+    self._run_once()
+    │    └ <function BaseEventLoop._run_once at 0x7f600a9ef7e0>
+    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+  File "/usr/lib/python3.13/asyncio/base_events.py", line 2050, in _run_once
+    handle._run()
+    │      └ <function Handle._run at 0x7f600a91a7a0>
+    └ <Handle <_asyncio.TaskStepMethWrapper object at 0x7f5fe5d387f0>()>
+  File "/usr/lib/python3.13/asyncio/events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+    │    │            │    │           │    └ <member '_args' of 'Handle' objects>
+    │    │            │    │           └ <Handle <_asyncio.TaskStepMethWrapper object at 0x7f5fe5d387f0>()>
+    │    │            │    └ <member '_callback' of 'Handle' objects>
+    │    │            └ <Handle <_asyncio.TaskStepMethWrapper object at 0x7f5fe5d387f0>()>
+    │    └ <member '_context' of 'Handle' objects>
+    └ <Handle <_asyncio.TaskStepMethWrapper object at 0x7f5fe5d387f0>()>
+> File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/.venv/lib/python3.13/site-packages/assistant/main.py", line 102, in run_listen
+    plugins = resolver.resolve_all()
+              │        └ <function ConfigResolver.resolve_all at 0x7f5fd218f060>
+              └ <assistant.config.resolver.ConfigResolver object at 0x7f5fd21c8980>
+  File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/.venv/lib/python3.13/site-packages/assistant/config/resolver.py", line 45, in resolve_all
+    self.load()
+    │    └ <function ConfigResolver.load at 0x7f5fd218ee80>
+    └ <assistant.config.resolver.ConfigResolver object at 0x7f5fd21c8980>
+  File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/.venv/lib/python3.13/site-packages/assistant/config/resolver.py", line 19, in load
+    raise FileNotFoundError(f"Config file not found: {self.config_path}")
+                                                      │    └ PosixPath('config/config.yaml')
+                                                      └ <assistant.config.resolver.ConfigResolver object at 0x7f5fd21c8980>
+
+FileNotFoundError: Config file not found: config/config.yaml
+2025-11-05 23:49:40.750 | ERROR    | assistant.telemetry.log:exception:137 - Config file not found: config/config.yaml
+Traceback (most recent call last):
+
+  File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/.venv/bin/va-cli", line 10, in <module>
+    sys.exit(main())
+    │   │    └ <function main at 0x7f9ae039f060>
+    │   └ <built-in function exit>
+    └ <module 'sys' (built-in)>
+
+  File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/main.py", line 70, in main
+    asyncio.run(run_listen(args))
+    │       │   │          └ Namespace(cmd='listen', config='config/config.yaml', plugins_dir='configs/plugins.d/voice', url='http://127.0.0.1:8000', list...
+    │       │   └ <function run_listen at 0x7f9ae039f100>
+    │       └ <function run at 0x7f9b0248d8a0>
+    └ <module 'asyncio' from '/usr/lib/python3.13/asyncio/__init__.py'>
+
+  File "/usr/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           │      │   └ <coroutine object run_listen at 0x7f9ae0447dc0>
+           │      └ <function Runner.run at 0x7f9b01aebec0>
+           └ <asyncio.runners.Runner object at 0x7f9ae0342a50>
+  File "/usr/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           │    │     │                  └ <Task pending name='Task-1' coro=<run_listen() running at /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/main.py:...
+           │    │     └ <function BaseEventLoop.run_until_complete at 0x7f9b01ae9a80>
+           │    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+           └ <asyncio.runners.Runner object at 0x7f9ae0342a50>
+  File "/usr/lib/python3.13/asyncio/base_events.py", line 712, in run_until_complete
+    self.run_forever()
+    │    └ <function BaseEventLoop.run_forever at 0x7f9b01ae99e0>
+    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+  File "/usr/lib/python3.13/asyncio/base_events.py", line 683, in run_forever
+    self._run_once()
+    │    └ <function BaseEventLoop._run_once at 0x7f9b01aeb7e0>
+    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+  File "/usr/lib/python3.13/asyncio/base_events.py", line 2050, in _run_once
+    handle._run()
+    │      └ <function Handle._run at 0x7f9b01a268e0>
+    └ <Handle <_asyncio.TaskStepMethWrapper object at 0x7f9ae040d870>()>
+  File "/usr/lib/python3.13/asyncio/events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+    │    │            │    │           │    └ <member '_args' of 'Handle' objects>
+    │    │            │    │           └ <Handle <_asyncio.TaskStepMethWrapper object at 0x7f9ae040d870>()>
+    │    │            │    └ <member '_callback' of 'Handle' objects>
+    │    │            └ <Handle <_asyncio.TaskStepMethWrapper object at 0x7f9ae040d870>()>
+    │    └ <member '_context' of 'Handle' objects>
+    └ <Handle <_asyncio.TaskStepMethWrapper object at 0x7f9ae040d870>()>
+
+> File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/main.py", line 102, in run_listen
+    plugins = resolver.resolve_all()
+              │        └ <function ConfigResolver.resolve_all at 0x7f9ae039e8e0>
+              └ <assistant.config.resolver.ConfigResolver object at 0x7f9ae03d8980>
+
+  File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/config/resolver.py", line 45, in resolve_all
+    self.load()
+    │    └ <function ConfigResolver.load at 0x7f9ae039e700>
+    └ <assistant.config.resolver.ConfigResolver object at 0x7f9ae03d8980>
+
+  File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/config/resolver.py", line 19, in load
+    raise FileNotFoundError(f"Config file not found: {self.config_path}")
+                                                      │    └ PosixPath('config/config.yaml')
+                                                      └ <assistant.config.resolver.ConfigResolver object at 0x7f9ae03d8980>
+
+FileNotFoundError: Config file not found: config/config.yaml
+2025-11-06 10:13:02.357 | ERROR    | assistant.telemetry.log:error:136 - ERR:
+2025-11-06 10:13:16.089 | ERROR    | assistant.telemetry.log:error:136 - ERR:
+2025-11-06 10:13:22.259 | ERROR    | assistant.telemetry.log:error:136 - ERR:
+2025-11-06 10:13:41.295 | ERROR    | assistant.telemetry.log:error:136 - ERR:
+2025-11-06 10:13:56.374 | ERROR    | assistant.telemetry.log:error:136 - ERR:
+2025-11-06 10:14:36.729 | ERROR    | assistant.telemetry.log:error:136 - ERR:
+2025-11-06 10:14:49.184 | ERROR    | assistant.telemetry.log:error:136 - ERR:
+2025-11-06 10:14:50.959 | ERROR    | assistant.telemetry.log:error:136 - ERR:
+2025-11-06 10:17:43.418 | ERROR    | assistant.telemetry.log:error:136 - ERR: None
+2025-11-06 10:17:47.262 | ERROR    | assistant.telemetry.log:error:136 - ERR: None
+2025-11-06 10:18:03.387 | ERROR    | assistant.telemetry.log:error:136 - ERR: no_intent
+2025-11-06 10:43:03.631 | ERROR    | assistant.telemetry.log:exception:137 - Config file not found: jarvis/assistant/config/config.yaml
+Traceback (most recent call last):
+
+  File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/.venv/bin/va-cli", line 10, in <module>
+    sys.exit(main())
+    │   │    └ <function main at 0x7fd66c197060>
+    │   └ <built-in function exit>
+    └ <module 'sys' (built-in)>
+
+  File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/main.py", line 70, in main
+    asyncio.run(run_listen(args))
+    │       │   │          └ Namespace(cmd='listen', config='jarvis/assistant/config/config.yaml', plugins_dir='configs/plugins.d/voice', url='http://127....
+    │       │   └ <function run_listen at 0x7fd66c197100>
+    │       └ <function run at 0x7fd68d98d8a0>
+    └ <module 'asyncio' from '/usr/lib/python3.13/asyncio/__init__.py'>
+
+  File "/usr/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           │      │   └ <coroutine object run_listen at 0x7fd66c543dc0>
+           │      └ <function Runner.run at 0x7fd68cfefec0>
+           └ <asyncio.runners.Runner object at 0x7fd66c13aa50>
+  File "/usr/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           │    │     │                  └ <Task pending name='Task-1' coro=<run_listen() running at /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/main.py:...
+           │    │     └ <function BaseEventLoop.run_until_complete at 0x7fd68cfeda80>
+           │    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+           └ <asyncio.runners.Runner object at 0x7fd66c13aa50>
+  File "/usr/lib/python3.13/asyncio/base_events.py", line 712, in run_until_complete
+    self.run_forever()
+    │    └ <function BaseEventLoop.run_forever at 0x7fd68cfed9e0>
+    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+  File "/usr/lib/python3.13/asyncio/base_events.py", line 683, in run_forever
+    self._run_once()
+    │    └ <function BaseEventLoop._run_once at 0x7fd68cfef7e0>
+    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+  File "/usr/lib/python3.13/asyncio/base_events.py", line 2050, in _run_once
+    handle._run()
+    │      └ <function Handle._run at 0x7fd68cf2a8e0>
+    └ <Handle <_asyncio.TaskStepMethWrapper object at 0x7fd67192f910>()>
+  File "/usr/lib/python3.13/asyncio/events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+    │    │            │    │           │    └ <member '_args' of 'Handle' objects>
+    │    │            │    │           └ <Handle <_asyncio.TaskStepMethWrapper object at 0x7fd67192f910>()>
+    │    │            │    └ <member '_callback' of 'Handle' objects>
+    │    │            └ <Handle <_asyncio.TaskStepMethWrapper object at 0x7fd67192f910>()>
+    │    └ <member '_context' of 'Handle' objects>
+    └ <Handle <_asyncio.TaskStepMethWrapper object at 0x7fd67192f910>()>
+
+> File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/main.py", line 102, in run_listen
+    plugins = resolver.resolve_all()
+              │        └ <function ConfigResolver.resolve_all at 0x7fd66c1968e0>
+              └ <assistant.config.resolver.ConfigResolver object at 0x7fd66c1d0980>
+
+  File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/config/resolver.py", line 45, in resolve_all
+    self.load()
+    │    └ <function ConfigResolver.load at 0x7fd66c196700>
+    └ <assistant.config.resolver.ConfigResolver object at 0x7fd66c1d0980>
+
+  File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/config/resolver.py", line 19, in load
+    raise FileNotFoundError(f"Config file not found: {self.config_path}")
+                                                      │    └ PosixPath('jarvis/assistant/config/config.yaml')
+                                                      └ <assistant.config.resolver.ConfigResolver object at 0x7fd66c1d0980>
+
+FileNotFoundError: Config file not found: jarvis/assistant/config/config.yaml
+2025-11-07 14:18:13.011 | ERROR    | assistant.telemetry.log:error:136 - ERR: no_intent
+2025-11-07 14:19:43.067 | ERROR    | assistant.telemetry.log:error:136 - ERR: no_intent

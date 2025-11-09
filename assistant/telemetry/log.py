@@ -21,15 +21,12 @@ def setup_logger(
 ) -> "_BoundLogger":
     """
     Ініціалізує loguru:
-    - Кольоровий консольний вивід
-    - Ротація щодня, збереження 7 днів, архівація .zip
-    - Окремий файл для ERROR+
-    - (опційно) JSON-лог у файл (serialize=True)
-    - Перехоплення стандартного logging
-
-    Повертає звʼязаний логер із базовим контекстом (app=app_name, env=env).
+    - Якщо JARVIS_CAPTURE_STDOUT=1 -> лише stdout (щоб батько міг читати і сам писати файл)
+    - Інакше -> консоль + файл(и)
     """
     env = env or os.getenv("APP_ENV", "dev")
+    capture_stdout = os.getenv("JARVIS_CAPTURE_STDOUT") is not None and os.getenv("JARVIS_CAPTURE_STDOUT") != "0"
+
     log_path = Path(log_dir)
     log_path.mkdir(parents=True, exist_ok=True)
 
@@ -45,54 +42,67 @@ def setup_logger(
         "{exception}"
     )
 
-    # 1) Консоль
+    # Якщо процес запущено для capture stdout — пишемо лише в stdout (не додаємо файли)
+   # if capture_stdout:
+        # Лог у stdout (щоб батько читав з PIPE)
     _logger.add(
-        sys.stderr,
+        sys.stdout,
         level=level,
-        colorize=True,
-        backtrace=(env == "dev"),
-        diagnose=(env == "dev"),
+        colorize=False,  # якщо хочеш кольори у дочірньому процесі — можна True, але краще False для маш. читання
+        backtrace=False,
+        diagnose=False,
         format=console_fmt,
-        enqueue=True,  # безпечніше для багатопроцесності
-    )
-
-    # 2) Основний файл (щоденна ротація)
-    _logger.add(
-        log_path / f"{app_name}_{{time:YYYY-MM-DD}}.log",
-        level=level,
-        rotation="00:00",
-        retention="7 days",
-        compression="zip",
         enqueue=True,
-        serialize=False,  # текстовий лог
     )
-
-    # 3) Помилки в окремий файл
-    _logger.add(
-        log_path / f"{app_name}_errors.log",
-        level="ERROR",
-        rotation="10 MB",
-        retention="14 days",
-        compression="zip",
-        enqueue=True,
-        serialize=False,
-    )
-
-    # 4) (опційно) JSON-лог (зручно парсити системами збору логів)
-    if serialize:
+    """     else:
+        # 1) Консоль (stderr для dev, але можна і stdout)
         _logger.add(
-            log_path / f"{app_name}_structured_{{time:YYYY-MM-DD}}.jsonl",
+            sys.stderr,
+            level=level,
+            colorize=False,
+            backtrace=(env == "dev"),
+            diagnose=(env == "dev"),
+            format=console_fmt,
+            enqueue=True,
+        )
+
+        # 2) Основний файл (щоденна ротація)
+        _logger.add(
+            log_path / f"{app_name}_{{time:YYYY-MM-DD}}.log",
             level=level,
             rotation="00:00",
             retention="7 days",
+            compression="zip",
             enqueue=True,
-            serialize=True,
+            serialize=False,  # текстовий лог
         )
 
-    # Перехоплюємо стандартний logging → loguru
+        # 3) Помилки в окремий файл
+        _logger.add(
+            log_path / f"{app_name}_errors.log",
+            level="ERROR",
+            rotation="10 MB",
+            retention="14 days",
+            compression="zip",
+            enqueue=True,
+            serialize=False,
+        )
+
+        # 4) (опційно) JSON-лог (зручно парсити системами збору логів)
+        if serialize:
+            _logger.add(
+                log_path / f"{app_name}_structured_{{time:YYYY-MM-DD}}.jsonl",
+                level=level,
+                rotation="00:00",
+                retention="7 days",
+                enqueue=True,
+                serialize=True,
+            )
+
+    # Перехоплюємо стандартний logging → loguru (за потреби)
     if intercept_std_logging:
         _intercept_std_logging()
-
+```"""
     # Базовий контекст
     bound = _logger.bind(app=app_name, env=env)
     return _BoundLogger(bound)

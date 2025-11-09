@@ -1,0 +1,149 @@
+2025-11-06 10:10:02.434 | INFO     | assistant.telemetry.log:info:134 - 🎙️  Jarvis is starting...
+2025-11-06 10:10:24.352 | INFO     | assistant.telemetry.log:info:134 - 🎙️  Jarvis is starting...
+2025-11-06 10:10:36.904 | INFO     | assistant.telemetry.log:info:134 - 🎙️  Jarvis is starting...
+2025-11-06 10:11:15.303 | INFO     | assistant.telemetry.log:info:134 - 🎙️  Jarvis is starting...
+2025-11-06 10:11:27.483 | INFO     | assistant.telemetry.log:info:134 - 🎙️  Jarvis is starting...
+2025-11-06 10:12:15.090 | INFO     | assistant.telemetry.log:info:134 - 🎙️  Jarvis is starting...
+2025-11-06 10:12:17.618 | INFO     | assistant.telemetry.log:info:134 - Listening... (Ctrl+C for exit)
+2025-11-06 10:12:17.618 | INFO     | assistant.telemetry.log:info:134 - Device: pulse | STT=VoskUkPlugin
+2025-11-06 10:12:28.580 | INFO     | assistant.telemetry.log:info:134 - 
+Завершення…
+2025-11-06 10:12:55.623 | INFO     | assistant.telemetry.log:info:134 - 🎙️  Jarvis is starting...
+2025-11-06 10:12:58.133 | INFO     | assistant.telemetry.log:info:134 - Listening... (Ctrl+C for exit)
+2025-11-06 10:12:58.133 | INFO     | assistant.telemetry.log:info:134 - Device: pulse | STT=VoskUkPlugin
+2025-11-06 10:13:02.342 | INFO     | assistant.telemetry.log:info:134 - 
+Text: «відкритого телеграм»
+2025-11-06 10:13:02.357 | ERROR    | assistant.telemetry.log:error:136 - ERR:
+2025-11-06 10:13:05.949 | INFO     | assistant.telemetry.log:info:134 - 
+Text: «телеграм відкрий»
+2025-11-06 10:13:05.957 | INFO     | assistant.telemetry.log:info:134 - intent=app.open slots={'app': 'Telegram'} conf=0.64
+2025-11-06 10:13:05.958 | INFO     | assistant.telemetry.log:info:134 - action:
+2025-11-06 10:13:05.958 | INFO     | assistant.telemetry.log:info:134 - reply:
+2025-11-06 10:13:16.087 | INFO     | assistant.telemetry.log:info:134 - 
+Text: «ні»
+2025-11-06 10:13:16.089 | ERROR    | assistant.telemetry.log:error:136 - ERR:
+2025-11-06 10:13:22.256 | INFO     | assistant.telemetry.log:info:134 - 
+Text: «вони так так просто якщо така що погано розпізнає»
+2025-11-06 10:13:22.259 | ERROR    | assistant.telemetry.log:error:136 - ERR:
+2025-11-06 10:13:32.334 | INFO     | assistant.telemetry.log:info:134 - 
+Text: «гукати»
+2025-11-06 10:13:32.342 | INFO     | assistant.telemetry.log:info:134 - intent=app.open slots={'app': 'https://www.youtube.com/watch?v=7D4qgR3TsRc'} conf=0.5
+2025-11-06 10:13:32.342 | INFO     | assistant.telemetry.log:info:134 - action:
+2025-11-06 10:13:32.342 | INFO     | assistant.telemetry.log:info:134 - reply:
+2025-11-06 10:13:41.293 | INFO     | assistant.telemetry.log:info:134 - 
+Text: «відкрило»
+2025-11-06 10:13:41.295 | ERROR    | assistant.telemetry.log:error:136 - ERR:
+2025-11-06 10:13:56.372 | INFO     | assistant.telemetry.log:info:134 - 
+Text: «вісім»
+2025-11-06 10:13:56.374 | ERROR    | assistant.telemetry.log:error:136 - ERR:
+2025-11-06 10:14:36.727 | INFO     | assistant.telemetry.log:info:134 - 
+Text: «покращена»
+2025-11-06 10:14:36.729 | ERROR    | assistant.telemetry.log:error:136 - ERR:
+2025-11-06 10:14:49.182 | INFO     | assistant.telemetry.log:info:134 - 
+Text: «ми непогано щось інтернет»
+2025-11-06 10:14:49.184 | ERROR    | assistant.telemetry.log:error:136 - ERR:
+2025-11-06 10:14:50.956 | INFO     | assistant.telemetry.log:info:134 - 
+Text: «японія»
+2025-11-06 10:14:50.959 | ERROR    | assistant.telemetry.log:error:136 - ERR:
+2025-11-06 10:15:06.259 | INFO     | assistant.telemetry.log:info:134 - 
+Завершення…
+2025-11-06 10:15:17.734 | INFO     | assistant.telemetry.log:info:134 - 🎙️  Jarvis is starting...
+2025-11-06 10:15:20.253 | INFO     | assistant.telemetry.log:info:134 - Listening... (Ctrl+C for exit)
+2025-11-06 10:15:20.254 | INFO     | assistant.telemetry.log:info:134 - Device: pulse | STT=VoskUkPlugin
+2025-11-06 10:15:24.758 | INFO     | assistant.telemetry.log:info:134 - 
+Text: «відкрити храм»
+2025-11-06 10:15:24.771 | INFO     | assistant.telemetry.log:info:134 - intent=app.open slots={'app': 'chromium'} conf=0.6086956521739131
+2025-11-06 10:17:19.633 | INFO     | assistant.telemetry.log:info:134 - 🎙️  Jarvis is starting...
+2025-11-06 10:17:22.406 | INFO     | assistant.telemetry.log:info:134 - Listening... (Ctrl+C for exit)
+2025-11-06 10:17:22.407 | INFO     | assistant.telemetry.log:info:134 - Device: pulse | STT=VoskUkPlugin
+2025-11-06 10:17:43.407 | INFO     | assistant.telemetry.log:info:134 - 
+Text: «відкрите»
+2025-11-06 10:17:43.418 | ERROR    | assistant.telemetry.log:error:136 - ERR: None
+2025-11-06 10:17:47.259 | INFO     | assistant.telemetry.log:info:134 - 
+Text: «запустити»
+2025-11-06 10:17:47.262 | ERROR    | assistant.telemetry.log:error:136 - ERR: None
+2025-11-06 10:17:50.864 | INFO     | assistant.telemetry.log:info:134 - 
+Text: «відкрив мені крафт»
+2025-11-06 10:17:50.872 | INFO     | assistant.telemetry.log:info:134 - intent=app.open slots={'app': 'prismlauncher'} conf=0.5333333333333333
+2025-11-06 10:17:50.872 | INFO     | assistant.telemetry.log:info:134 - action: {'ok': True, 'launched': ['prismlauncher']}
+2025-11-06 10:17:50.872 | INFO     | assistant.telemetry.log:info:134 - reply: Відкриваю prismlauncher.
+2025-11-06 10:18:03.385 | INFO     | assistant.telemetry.log:info:134 - 
+Text: «зокрема крафт»
+2025-11-06 10:18:03.387 | ERROR    | assistant.telemetry.log:error:136 - ERR: no_intent
+2025-11-06 10:18:08.587 | INFO     | assistant.telemetry.log:info:134 - 
+Text: «вимкни майнкрафт»
+2025-11-06 10:18:08.645 | INFO     | assistant.telemetry.log:info:134 - intent=app.close slots={'app': 'prismlauncher'} conf=0.6
+2025-11-06 10:18:08.646 | INFO     | assistant.telemetry.log:info:134 - action: {'ok': True, 'intent': 'app.close', 'value': 'prismlauncher', 'matched_pids': [7959], 'terminated': [7959], 'killed': [], 'still_alive': [], 'used_window_close': False, 'scanned': 226}
+2025-11-06 10:18:08.646 | INFO     | assistant.telemetry.log:info:134 - reply: Готово.
+2025-11-06 10:18:49.543 | INFO     | assistant.telemetry.log:info:134 - 
+Завершення…
+2025-11-06 10:43:03.631 | INFO     | assistant.telemetry.log:info:134 - 🎙️  Jarvis is starting...
+2025-11-06 10:43:03.631 | ERROR    | assistant.telemetry.log:exception:137 - Config file not found: jarvis/assistant/config/config.yaml
+Traceback (most recent call last):
+
+  File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/.venv/bin/va-cli", line 10, in <module>
+    sys.exit(main())
+    │   │    └ <function main at 0x7fd66c197060>
+    │   └ <built-in function exit>
+    └ <module 'sys' (built-in)>
+
+  File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/main.py", line 70, in main
+    asyncio.run(run_listen(args))
+    │       │   │          └ Namespace(cmd='listen', config='jarvis/assistant/config/config.yaml', plugins_dir='configs/plugins.d/voice', url='http://127....
+    │       │   └ <function run_listen at 0x7fd66c197100>
+    │       └ <function run at 0x7fd68d98d8a0>
+    └ <module 'asyncio' from '/usr/lib/python3.13/asyncio/__init__.py'>
+
+  File "/usr/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           │      │   └ <coroutine object run_listen at 0x7fd66c543dc0>
+           │      └ <function Runner.run at 0x7fd68cfefec0>
+           └ <asyncio.runners.Runner object at 0x7fd66c13aa50>
+  File "/usr/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           │    │     │                  └ <Task pending name='Task-1' coro=<run_listen() running at /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/main.py:...
+           │    │     └ <function BaseEventLoop.run_until_complete at 0x7fd68cfeda80>
+           │    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+           └ <asyncio.runners.Runner object at 0x7fd66c13aa50>
+  File "/usr/lib/python3.13/asyncio/base_events.py", line 712, in run_until_complete
+    self.run_forever()
+    │    └ <function BaseEventLoop.run_forever at 0x7fd68cfed9e0>
+    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+  File "/usr/lib/python3.13/asyncio/base_events.py", line 683, in run_forever
+    self._run_once()
+    │    └ <function BaseEventLoop._run_once at 0x7fd68cfef7e0>
+    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+  File "/usr/lib/python3.13/asyncio/base_events.py", line 2050, in _run_once
+    handle._run()
+    │      └ <function Handle._run at 0x7fd68cf2a8e0>
+    └ <Handle <_asyncio.TaskStepMethWrapper object at 0x7fd67192f910>()>
+  File "/usr/lib/python3.13/asyncio/events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+    │    │            │    │           │    └ <member '_args' of 'Handle' objects>
+    │    │            │    │           └ <Handle <_asyncio.TaskStepMethWrapper object at 0x7fd67192f910>()>
+    │    │            │    └ <member '_callback' of 'Handle' objects>
+    │    │            └ <Handle <_asyncio.TaskStepMethWrapper object at 0x7fd67192f910>()>
+    │    └ <member '_context' of 'Handle' objects>
+    └ <Handle <_asyncio.TaskStepMethWrapper object at 0x7fd67192f910>()>
+
+> File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/main.py", line 102, in run_listen
+    plugins = resolver.resolve_all()
+              │        └ <function ConfigResolver.resolve_all at 0x7fd66c1968e0>
+              └ <assistant.config.resolver.ConfigResolver object at 0x7fd66c1d0980>
+
+  File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/config/resolver.py", line 45, in resolve_all
+    self.load()
+    │    └ <function ConfigResolver.load at 0x7fd66c196700>
+    └ <assistant.config.resolver.ConfigResolver object at 0x7fd66c1d0980>
+
+  File "/home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/config/resolver.py", line 19, in load
+    raise FileNotFoundError(f"Config file not found: {self.config_path}")
+                                                      │    └ PosixPath('jarvis/assistant/config/config.yaml')
+                                                      └ <assistant.config.resolver.ConfigResolver object at 0x7fd66c1d0980>
+
+FileNotFoundError: Config file not found: jarvis/assistant/config/config.yaml
+2025-11-06 10:43:12.500 | INFO     | assistant.telemetry.log:info:134 - 🎙️  Jarvis is starting...
+2025-11-06 10:43:15.068 | INFO     | assistant.telemetry.log:info:134 - Listening... (Ctrl+C for exit)
+2025-11-06 10:43:15.069 | INFO     | assistant.telemetry.log:info:134 - Device: pulse | STT=VoskUkPlugin
+2025-11-06 10:43:19.145 | INFO     | assistant.telemetry.log:info:134 - 
+Завершення…

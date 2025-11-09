@@ -24,14 +24,13 @@ dependencies = [
     "thefuzz>=0.22.1",
     "fastapi>=0.118.0",
     "uvicorn>=0.37.0",
-    "openwakeword>=0.6.0",
-    "onnxruntime>=1.23.0",
     "numpy>=2.3.0",
     "scipy>=1.16.0",
     "scikit-learn>=1.7.0",
     "psutil>=7.1.0",
     "pyttsx3>=2.99",
-    "audioop-lts>=0.2.2"
+    "audioop-lts>=0.2.2",
+    "python-multipart>=0.0.20"
 ]
 
 [project.optional-dependencies]
@@ -40,8 +39,8 @@ gpu = []
 whisper = []
 
 [project.scripts]
-va-daemon = "assistant.cli.main:run_daemon"
-va-cli = "assistant.cli.main:run_cli"
+va-daemon = "assistant.main:run_daemon"
+va-cli = "assistant.main:main"
 
 [project.entry-points."va.plugins"]
 sys_controls = "assistant.pluginsbuiltin.sys_controls:SysControlsPlugin"
