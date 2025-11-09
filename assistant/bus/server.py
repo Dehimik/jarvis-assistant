@@ -9,7 +9,7 @@ from contextlib import suppress
 from typing import Optional
 import json, shutil, yaml, asyncio
 
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect, UploadFile, File, HTTPException
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, UploadFile, File, HTTPException, Body
 from pydantic import BaseModel
 from pathlib import Path
 
@@ -177,12 +177,13 @@ def write_settings(s: Settings) -> Settings:
     SETTINGS_FILE.write_text(json.dumps(s.dict(), ensure_ascii=False, indent=2))
     return s
 
-def safe_name(name: str) -> str:
-    bad = set('/\\:*?"<>|')
-    nm = "".join(c for c in name if c not in bad).strip()
-    if not nm:
-        raise HTTPException(400, "bad name")
-    return nm
+def safe_name(fname: str):
+    if ".." in fname:
+        raise HTTPException(400, "Invalid path")
+    return fname.strip("/")
+
+class NewFileRequest(BaseModel):
+    name: str
 
 # system / nlu
 @app.get("/health")
@@ -418,14 +419,55 @@ def delete_plugin(name: str):
     return {"ok": True}
 
 # intents
-@app.get("/api/intents")
-def list_intents():
-    items = []
-    for p in sorted(INTENTS_DIR.glob("*.yml")) + sorted(INTENTS_DIR.glob("*.yaml")):
-        items.append({"name": p.name})
-    return {"files": items}
+@app.post("/api/intents/new")
+def new_intent_file(request: NewFileRequest):
+    """
+    Очікує JSON тіло: {"name": "path/to/file"}
+    """
+    nm = safe_name(request.name)
 
-@app.get("/api/intents/{fname}")
+    if not (nm.endswith(".yml") or nm.endswith(".yaml")):
+        nm += ".yaml"
+
+    path = INTENTS_DIR / nm
+
+    if path.exists():
+       raise HTTPException(409, "exists")
+
+    try:
+        path.parent.mkdir(parents=True, exist_ok=True)
+    except Exception as e:
+        raise HTTPException(500, f"Could not create directory: {e}")
+
+    default_template = {}
+
+    path.write_text(yaml.safe_dump(default_template,
+                                   allow_unicode=True, sort_keys=False), encoding="utf-8")
+
+    app.state.nlu.reload()
+
+    return {"ok": True, "name": nm}
+
+@app.post("/api/intents/{fname:path}")
+def save_intent_file(fname: str, content: str = Body(..., media_type="text/plain")):
+    """
+    Отримує простий текст (text/plain) з тіла запиту.
+    """
+    nm = safe_name(fname)
+
+    path = INTENTS_DIR / nm
+
+    try:
+        path.parent.mkdir(parents=True, exist_ok=True)
+    except Exception as e:
+        raise HTTPException(500, f"Could not create directory for saving: {e}")
+
+    path.write_text(content, encoding="utf-8")
+
+    app.state.nlu.reload()
+    return {"ok": True, "name": nm}
+
+@app.get("/api/intents/{fname:path}")
 def get_intent_file(fname: str):
     nm = safe_name(fname)
     path = INTENTS_DIR / nm
@@ -433,39 +475,8 @@ def get_intent_file(fname: str):
         raise HTTPException(404, "not found")
     return {"name": nm, "text": path.read_text(encoding="utf-8")}
 
-@app.post("/api/intents/{fname}")
-def save_intent_file(fname: str, content: dict | str):
-    """
-    content: або сирий YAML-текст (str), або уже розпарсений JSON (dict).
-    """
-    nm = safe_name(fname)
-    if not (nm.endswith(".yml") or nm.endswith(".yaml")):
-        nm += ".yml"
-    path = INTENTS_DIR / nm
 
-    if isinstance(content, str):
-        path.write_text(content, encoding="utf-8")
-    else:
-        path.write_text(yaml.safe_dump(content, sort_keys=False, allow_unicode=True), encoding="utf-8")
-
-    app.state.nlu.reload()
-    return {"ok": True, "name": nm}
-
-@app.post("/api/intents/new")
-def new_intent_file(name: str, template: dict | None = None):
-    nm = safe_name(name)
-    if not (nm.endswith(".yml") or nm.endswith(".yaml")):
-        nm += ".yml"
-    path = INTENTS_DIR / nm
-    if path.exists():
-        raise HTTPException(409, "exists")
-
-    path.write_text(yaml.safe_dump(template or {"intent": "", "utterances": []},
-                                   allow_unicode=True), encoding="utf-8")
-    app.state.nlu.reload()
-    return {"ok": True, "name": nm}
-
-@app.delete("/api/intents/{fname}")
+@app.delete("/api/intents/{fname:path}")
 def delete_intent_file(fname: str):
     nm = safe_name(fname)
     path = INTENTS_DIR / nm
@@ -474,3 +485,27 @@ def delete_intent_file(fname: str):
     path.unlink()
     app.state.nlu.reload()
     return {"ok": True}
+
+@app.get("/api/intents")
+def list_intents():
+    items = []
+    # Використовуємо .rglob() для рекурсивного пошуку в підпапках
+    yml_files = sorted(INTENTS_DIR.rglob("*.yml"))
+    yaml_files = sorted(INTENTS_DIR.rglob("*.yaml"))
+
+    all_files = yml_files + yaml_files
+    processed_paths = set()  # Використовуємо set для уникнення дублікатів
+
+    for p in all_files:
+        # Отримуємо шлях відносно INTENTS_DIR (напр., "subdir/file.yml")
+        # і нормалізуємо слеші для сумісності
+        relative_path = str(p.relative_to(INTENTS_DIR)).replace("\\", "/")
+
+        if relative_path not in processed_paths:
+            items.append({"name": relative_path})
+            processed_paths.add(relative_path)
+
+    # Сортуємо фінальний список за іменем
+    items.sort(key=lambda x: x['name'])
+
+    return {"files": items}

@@ -1,19 +1,26 @@
 from __future__ import annotations
 import argparse
 import asyncio
+import os
 import sys
 from typing import Optional
 
 import sounddevice as sd
+from loguru import logger
 import numpy as np
-import time
 from pathlib import Path
+from dotenv import load_dotenv
 
 import uvicorn
 
-# --- твої модулі ---
+# my modules
 from assistant.bus.client import BusClient
+from assistant.db.conn import make_session_factory
+from assistant.db.db_sink_min import DBSink
 from assistant.telemetry.log import setup_logger
+
+from sqlalchemy.orm import sessionmaker
+from assistant.db.repo_min import insert_command_event
 
 # stt tts
 from assistant.config.resolver import ConfigResolver
@@ -25,6 +32,8 @@ REPO = HERE.parent                               # корінь репо (де a
 DEFAULT_CONFIG = HERE / "config" / "config.yaml" # assistant/config/config.yaml
 DEFAULT_PLUGINS = REPO / "configs" / "plugins.d" / "voice"
 LOG_FILE = REPO / "assistant" / "data" / "jarvis.log"
+
+load_dotenv()
 
 # helpers
 def play_pcm_s16le(data: bytes, sample_rate: int = 22050):
@@ -107,7 +116,30 @@ async def run_listen(args):
     cfg_path = _resolve_path(args.config, DEFAULT_CONFIG)
     plugins_dir = _resolve_path(args.plugins_dir, DEFAULT_PLUGINS)
 
+    # ---- Logger: файл + DB sink ----
+    # базовий консольний лог через setup_logger (залишаємо)
     log = setup_logger("jarvis", level="INFO", env="dev", serialize=False)
+
+    # додамо файловий sink (ротація)
+    log_file = LOG_FILE
+    # якщо потрібна інша політика ротації — поміняй rotation/retention
+    logger.add(log_file, rotation="10 MB", retention="7 days", level="INFO", backtrace=True, diagnose=False)
+
+    SessionFactory: sessionmaker | None = None
+    dsn = os.getenv("JARVIS_DB_DSN")
+
+    if dsn:
+        try:
+            SessionFactory = make_session_factory(dsn)
+            db_sink = DBSink(SessionFactory)
+            logger.add(db_sink, level="INFO")   # всі INFO+ у БД
+            log.info("DB logging enabled")
+        except Exception as e:
+            log.exception(f"Не вдалося підключити DB sink: {e}")
+            SessionFactory = None
+    else:
+        log.warning("DB logging is disabled")
+
     log.info("🎙️  Jarvis is starting...")
 
     # клієнт до NLU/Bus
@@ -127,13 +159,13 @@ async def run_listen(args):
         raise SystemExit(3)
 
     stt = plugins["stt"]          # STTPlugin: .sample_rate(), .accept(pcm)->dict|None, .partial()
-    tts = plugins["tts"]          # TTSPlugin: .sample_rate(), .synth(text)->bytes (може бути необов'язковий)
+    tts = plugins.get("tts")      # TTS може бути необов'язковим
 
     # sanity-check audio
     check_audio_settings(args.device)
 
     # список вихідних фраз (якщо не передали — порожній)
-    exit_phrases = getattr(args, "exit_phrases", [])
+    exit_phrases = getattr(args, "exit_phrases", []) or []
 
     # start micro
     with recorder_ctx(
@@ -141,7 +173,7 @@ async def run_listen(args):
         frame_length=args.frame
     ) as rec:
         dev_name = rec.start()
-        log.info(f"Listening... (Ctrl+C for exit)")
+        log.info("Listening... (Ctrl+C for exit)")
         log.info(f"Device: {dev_name} | STT={stt.__class__.__name__}")
 
         # main loop: read frames → STT → NLU
@@ -167,30 +199,73 @@ async def run_listen(args):
                 try:
                     nlu = c.parse(text)       # очікуємо dict: ok/intent/slots/confidence/reply/action
                 except Exception as e:
-                    log.exception(f"ERR: не вдалося звернутись до NLU: {e}", file=sys.stderr)
-                    continue
+                    log.exception(f"ERR: не вдалося звернутись до NLU: {e}")
+                    # ВАЖЛИВО: Зберігаємо історію, навіть якщо NLU впав
+                    if SessionFactory:
+                        try:
+                            with SessionFactory() as db:
+                                insert_command_event(
+                                    db,
+                                    raw_text=text,
+                                    status="error",
+                                    error=f"NLU request failed: {e}"
+                                )
+                                db.commit()
+                        except Exception as db_e:
+                            print(f"ПОМИЛКА [CommandHistory]: Не вдалося зберегти помилку NLU в БД: {db_e}",
+                                  file=sys.stderr)
+                    continue  # переходимо до наступної фрази
 
                 if not nlu.get("ok"):
-                    log.error(f"ERR: {nlu.get("error")}")
+                    log.error(f"ERR: {nlu.get('error')}")
+                    if SessionFactory:
+                        try:
+                            with SessionFactory() as db:
+                                insert_command_event(
+                                    db,
+                                    raw_text=text,
+                                    status="error",
+                                    error=nlu.get('error', 'NLU returned ok=false')
+                                )
+                                db.commit()
+                        except Exception as db_e:
+                            print(f"ПОМИЛКА [CommandHistory]: Не вдалося зберегти помилку NLU в БД: {db_e}",
+                                  file=sys.stderr)
                     continue
 
+                if SessionFactory:
+                    try:
+                        with SessionFactory() as db:
+                            insert_command_event(
+                                db,
+                                raw_text=text,
+                                intent=nlu.get("intent"),
+                                slots=nlu.get("slots"),
+                                confidence=nlu.get("confidence"),
+                                status="parsed"  # або "success", якщо ти знаєш, що команда виконалась
+                            )
+                            db.commit()
+                    except Exception as db_e:
+                        # Використовуємо print, а не log, щоб не потрапити в цикл логера
+                        print(f"ПОМИЛKA [CommandHistory]: Не вдалося зберегти команду в БД: {db_e}", file=sys.stderr)
+
                 if args.print_intents:
-                    log.info(f"intent={nlu['intent']} slots={nlu['slots']} conf={nlu['confidence']}")
+                    log.info(f"intent={nlu.get('intent')} slots={nlu.get('slots')} conf={nlu.get('confidence')}")
 
                 if "action" in nlu:
-                    log.info(f"action: {nlu["action"]}")
+                    log.info(f"action: {nlu.get('action')}")
 
                 if "reply" in nlu:
-                    log.info(f"reply: {nlu["reply"]}")
+                    log.info(f"reply: {nlu.get('reply')}")
 
-                if args.say_ok:
+                if getattr(args, "say_ok", False):
                     reply = nlu.get("reply")
-                    if reply:
+                    if reply and tts:
                         try:
                             pcm_out = tts.synth(reply)
                             play_pcm_s16le(pcm_out, tts.sample_rate())
                         except Exception as e:
-                            log.exception(f"ERR: TTS synth/play failed: {e}", file=sys.stderr)
+                            log.exception(f"ERR: TTS synth/play failed: {e}")
 
         except KeyboardInterrupt:
             log.info("\nЗавершення…")

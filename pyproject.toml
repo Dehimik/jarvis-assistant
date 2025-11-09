@@ -12,6 +12,8 @@ license = {text = "MIT"}
 authors = [{name = "Dehimik"}]
 
 dependencies = [
+    "psycopg2-binary>=2.9.11",
+    "dotenv>=0.9.9",
     "pydantic>=2.6",
     "sounddevice>=0.5.0",
     "loguru>=0.7",
@@ -30,7 +32,8 @@ dependencies = [
     "psutil>=7.1.0",
     "pyttsx3>=2.99",
     "audioop-lts>=0.2.2",
-    "python-multipart>=0.0.20"
+    "python-multipart>=0.0.20",
+    "sqlalchemy>=2.0.44",
 ]
 
 [project.optional-dependencies]
