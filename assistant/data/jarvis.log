@@ -205,3 +205,222 @@ Text: «пісюн»
 2025-11-07 18:05:51.659 | INFO     | 24623:140141257825216 | log:info:144 - 
 Text: «сейму»
 2025-11-07 18:05:51.661 | ERROR    | 24623:140141257825216 | log:error:146 - ERR: no_intent
+2025-11-09 14:32:20.332 | INFO     | 3874:139989528820672 | log:info:144 - 🎙️  Jarvis is starting...
+['vosk_uk_v3']
+LOG (VoskAPI:ReadDataFiles():model.cc:213) Decoding params beam=13 max-active=7000 lattice-beam=6
+LOG (VoskAPI:ReadDataFiles():model.cc:216) Silence phones 1:2:3:4:5
+LOG (VoskAPI:RemoveOrphanNodes():nnet-nnet.cc:948) Removed 0 orphan nodes.
+LOG (VoskAPI:RemoveOrphanComponents():nnet-nnet.cc:847) Removing 0 orphan components.
+LOG (VoskAPI:ReadDataFiles():model.cc:248) Loading i-vector extractor from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/ivector/final.ie
+LOG (VoskAPI:ComputeDerivedVars():ivector-extractor.cc:183) Computing derived variables for iVector extractor
+LOG (VoskAPI:ComputeDerivedVars():ivector-extractor.cc:204) Done.
+LOG (VoskAPI:ReadDataFiles():model.cc:279) Loading HCLG from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/HCLG.fst
+LOG (VoskAPI:ReadDataFiles():model.cc:297) Loading words from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/words.txt
+LOG (VoskAPI:ReadDataFiles():model.cc:308) Loading winfo /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/phones/word_boundary.int
+2025-11-09 14:32:32.385 | INFO     | 3874:139989528820672 | log:info:144 - Listening... (Ctrl+C for exit)
+2025-11-09 14:32:32.385 | INFO     | 3874:139989528820672 | log:info:144 - Device: pulse | STT=VoskUkPlugin
+2025-11-09 14:32:42.127 | INFO     | 3874:139989528820672 | log:info:144 - 
+Text: «відкритими грам»
+2025-11-09 14:32:42.147 | INFO     | 3874:139989528820672 | log:info:144 - intent=app.open slots={'app': 'Telegram'} conf=0.56
+2025-11-09 14:32:42.148 | INFO     | 3874:139989528820672 | log:info:144 - action: {'ok': True, 'launched': ['Telegram']}
+2025-11-09 14:32:42.148 | INFO     | 3874:139989528820672 | log:info:144 - reply: Відкриваю Telegram.
+Audio saved to /tmp/tmpgm1mpuvy.wav
+2025-11-09 14:32:58.325 | INFO     | 4528:140164393282496 | log:info:144 - 🎙️  Jarvis is starting...
+['vosk_uk_v3']
+LOG (VoskAPI:ReadDataFiles():model.cc:213) Decoding params beam=13 max-active=7000 lattice-beam=6
+LOG (VoskAPI:ReadDataFiles():model.cc:216) Silence phones 1:2:3:4:5
+LOG (VoskAPI:RemoveOrphanNodes():nnet-nnet.cc:948) Removed 0 orphan nodes.
+LOG (VoskAPI:RemoveOrphanComponents():nnet-nnet.cc:847) Removing 0 orphan components.
+LOG (VoskAPI:ReadDataFiles():model.cc:248) Loading i-vector extractor from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/ivector/final.ie
+LOG (VoskAPI:ComputeDerivedVars():ivector-extractor.cc:183) Computing derived variables for iVector extractor
+LOG (VoskAPI:ComputeDerivedVars():ivector-extractor.cc:204) Done.
+LOG (VoskAPI:ReadDataFiles():model.cc:279) Loading HCLG from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/HCLG.fst
+LOG (VoskAPI:ReadDataFiles():model.cc:297) Loading words from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/words.txt
+2025-11-09 14:34:06.684 | INFO     | 5607:140003760106432 | log:info:144 - 🎙️  Jarvis is starting...
+['vosk_uk_v3']
+LOG (VoskAPI:ReadDataFiles():model.cc:213) Decoding params beam=13 max-active=7000 lattice-beam=6
+LOG (VoskAPI:ReadDataFiles():model.cc:216) Silence phones 1:2:3:4:5
+LOG (VoskAPI:RemoveOrphanNodes():nnet-nnet.cc:948) Removed 0 orphan nodes.
+LOG (VoskAPI:RemoveOrphanComponents():nnet-nnet.cc:847) Removing 0 orphan components.
+LOG (VoskAPI:ReadDataFiles():model.cc:248) Loading i-vector extractor from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/ivector/final.ie
+LOG (VoskAPI:ComputeDerivedVars():ivector-extractor.cc:183) Computing derived variables for iVector extractor
+LOG (VoskAPI:ComputeDerivedVars():ivector-extractor.cc:204) Done.
+LOG (VoskAPI:ReadDataFiles():model.cc:279) Loading HCLG from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/HCLG.fst
+LOG (VoskAPI:ReadDataFiles():model.cc:297) Loading words from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/words.txt
+LOG (VoskAPI:ReadDataFiles():model.cc:308) Loading winfo /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/phones/word_boundary.int
+2025-11-09 14:34:09.292 | INFO     | 5607:140003760106432 | log:info:144 - Listening... (Ctrl+C for exit)
+2025-11-09 14:34:09.293 | INFO     | 5607:140003760106432 | log:info:144 - Device: pulse | STT=VoskUkPlugin
+2025-11-09 14:48:47.922 | INFO     | 7878:140363067554752 | log:info:144 - 🎙️  Jarvis is starting...
+['vosk_uk_v3']
+LOG (VoskAPI:ReadDataFiles():model.cc:213) Decoding params beam=13 max-active=7000 lattice-beam=6
+LOG (VoskAPI:ReadDataFiles():model.cc:216) Silence phones 1:2:3:4:5
+LOG (VoskAPI:RemoveOrphanNodes():nnet-nnet.cc:948) Removed 0 orphan nodes.
+LOG (VoskAPI:RemoveOrphanComponents():nnet-nnet.cc:847) Removing 0 orphan components.
+LOG (VoskAPI:ReadDataFiles():model.cc:248) Loading i-vector extractor from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/ivector/final.ie
+LOG (VoskAPI:ComputeDerivedVars():ivector-extractor.cc:183) Computing derived variables for iVector extractor
+LOG (VoskAPI:ComputeDerivedVars():ivector-extractor.cc:204) Done.
+LOG (VoskAPI:ReadDataFiles():model.cc:279) Loading HCLG from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/HCLG.fst
+LOG (VoskAPI:ReadDataFiles():model.cc:297) Loading words from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/words.txt
+LOG (VoskAPI:ReadDataFiles():model.cc:308) Loading winfo /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/phones/word_boundary.int
+2025-11-09 14:48:50.682 | INFO     | 7878:140363067554752 | log:info:144 - Listening... (Ctrl+C for exit)
+2025-11-09 14:48:50.682 | INFO     | 7878:140363067554752 | log:info:144 - Device: pulse | STT=VoskUkPlugin
+2025-11-09 14:49:16.297 | INFO     | 7878:140363067554752 | log:info:144 - 
+Text: «розрізнення»
+2025-11-09 14:49:16.312 | ERROR    | 7878:140363067554752 | log:error:146 - ERR: no_intent
+2025-11-09 14:49:31.394 | INFO     | 7878:140363067554752 | log:info:144 - 
+Text: «шість»
+2025-11-09 14:49:31.396 | ERROR    | 7878:140363067554752 | log:error:146 - ERR: no_intent
+2025-11-09 14:49:44.603 | INFO     | 7878:140363067554752 | log:info:144 - 
+Text: «відкрито грам»
+2025-11-09 14:49:44.606 | INFO     | 7878:140363067554752 | log:info:144 - intent=app.open slots={'app': 'Telegram'} conf=0.6086956521739131
+2025-11-09 14:49:44.607 | INFO     | 7878:140363067554752 | log:info:144 - action: {'ok': True, 'launched': ['Telegram']}
+2025-11-09 14:49:44.607 | INFO     | 7878:140363067554752 | log:info:144 - reply: Відкриваю Telegram.
+2025-11-09 14:49:48.159 | INFO     | 7878:140363067554752 | log:info:144 - 
+Text: «заки телеграм»
+2025-11-09 14:49:48.162 | ERROR    | 7878:140363067554752 | log:error:146 - ERR: None
+2025-11-09 14:49:52.480 | INFO     | 7878:140363067554752 | log:info:144 - 
+Text: «вимкни телеграм»
+2025-11-09 14:49:52.547 | INFO     | 7878:140363067554752 | log:info:144 - intent=app.close slots={'app': 'Telegram'} conf=0.6
+2025-11-09 14:49:52.547 | INFO     | 7878:140363067554752 | log:info:144 - action: {'ok': True, 'intent': 'app.close', 'value': 'Telegram', 'matched_pids': [4442, 8504], 'terminated': [4442, 8504], 'killed': [], 'still_alive': [], 'used_window_close': False, 'scanned': 253}
+2025-11-09 14:49:52.547 | INFO     | 7878:140363067554752 | log:info:144 - reply: Готово.
+2025-11-09 14:58:10.965 | INFO     | 9769:139690615090112 | log:info:144 - 🎙️  Jarvis is starting...
+['vosk_uk_v3']
+LOG (VoskAPI:ReadDataFiles():model.cc:213) Decoding params beam=13 max-active=7000 lattice-beam=6
+LOG (VoskAPI:ReadDataFiles():model.cc:216) Silence phones 1:2:3:4:5
+LOG (VoskAPI:RemoveOrphanNodes():nnet-nnet.cc:948) Removed 0 orphan nodes.
+LOG (VoskAPI:RemoveOrphanComponents():nnet-nnet.cc:847) Removing 0 orphan components.
+LOG (VoskAPI:ReadDataFiles():model.cc:248) Loading i-vector extractor from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/ivector/final.ie
+LOG (VoskAPI:ComputeDerivedVars():ivector-extractor.cc:183) Computing derived variables for iVector extractor
+LOG (VoskAPI:ComputeDerivedVars():ivector-extractor.cc:204) Done.
+LOG (VoskAPI:ReadDataFiles():model.cc:279) Loading HCLG from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/HCLG.fst
+LOG (VoskAPI:ReadDataFiles():model.cc:297) Loading words from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/words.txt
+LOG (VoskAPI:ReadDataFiles():model.cc:308) Loading winfo /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/phones/word_boundary.int
+2025-11-09 14:58:13.985 | INFO     | 9769:139690615090112 | log:info:144 - Listening... (Ctrl+C for exit)
+2025-11-09 14:58:13.986 | INFO     | 9769:139690615090112 | log:info:144 - Device: pulse | STT=VoskUkPlugin
+2025-11-09 15:00:48.184 | INFO     | 10522:139917904567232 | log:info:144 - 🎙️  Jarvis is starting...
+['vosk_uk_v3']
+LOG (VoskAPI:ReadDataFiles():model.cc:213) Decoding params beam=13 max-active=7000 lattice-beam=6
+LOG (VoskAPI:ReadDataFiles():model.cc:216) Silence phones 1:2:3:4:5
+LOG (VoskAPI:RemoveOrphanNodes():nnet-nnet.cc:948) Removed 0 orphan nodes.
+LOG (VoskAPI:RemoveOrphanComponents():nnet-nnet.cc:847) Removing 0 orphan components.
+LOG (VoskAPI:ReadDataFiles():model.cc:248) Loading i-vector extractor from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/ivector/final.ie
+LOG (VoskAPI:ComputeDerivedVars():ivector-extractor.cc:183) Computing derived variables for iVector extractor
+LOG (VoskAPI:ComputeDerivedVars():ivector-extractor.cc:204) Done.
+LOG (VoskAPI:ReadDataFiles():model.cc:279) Loading HCLG from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/HCLG.fst
+LOG (VoskAPI:ReadDataFiles():model.cc:297) Loading words from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/words.txt
+LOG (VoskAPI:ReadDataFiles():model.cc:308) Loading winfo /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/phones/word_boundary.int
+2025-11-09 15:00:50.879 | INFO     | 10522:139917904567232 | log:info:144 - Listening... (Ctrl+C for exit)
+2025-11-09 15:00:50.880 | INFO     | 10522:139917904567232 | log:info:144 - Device: pulse | STT=VoskUkPlugin
+2025-11-09 15:00:56.479 | INFO     | 11099:140484951403456 | log:info:144 - 🎙️  Jarvis is starting...
+['vosk_uk_v3']
+LOG (VoskAPI:ReadDataFiles():model.cc:213) Decoding params beam=13 max-active=7000 lattice-beam=6
+LOG (VoskAPI:ReadDataFiles():model.cc:216) Silence phones 1:2:3:4:5
+LOG (VoskAPI:RemoveOrphanNodes():nnet-nnet.cc:948) Removed 0 orphan nodes.
+LOG (VoskAPI:RemoveOrphanComponents():nnet-nnet.cc:847) Removing 0 orphan components.
+LOG (VoskAPI:ReadDataFiles():model.cc:248) Loading i-vector extractor from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/ivector/final.ie
+LOG (VoskAPI:ComputeDerivedVars():ivector-extractor.cc:183) Computing derived variables for iVector extractor
+LOG (VoskAPI:ComputeDerivedVars():ivector-extractor.cc:204) Done.
+LOG (VoskAPI:ReadDataFiles():model.cc:279) Loading HCLG from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/HCLG.fst
+LOG (VoskAPI:ReadDataFiles():model.cc:297) Loading words from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/words.txt
+2025-11-09 15:12:21.761 | INFO     | 12986:139796857367488 | log:info:144 - 🎙️  Jarvis is starting...
+['vosk_uk_v3']
+LOG (VoskAPI:ReadDataFiles():model.cc:213) Decoding params beam=13 max-active=7000 lattice-beam=6
+LOG (VoskAPI:ReadDataFiles():model.cc:216) Silence phones 1:2:3:4:5
+LOG (VoskAPI:RemoveOrphanNodes():nnet-nnet.cc:948) Removed 0 orphan nodes.
+LOG (VoskAPI:RemoveOrphanComponents():nnet-nnet.cc:847) Removing 0 orphan components.
+LOG (VoskAPI:ReadDataFiles():model.cc:248) Loading i-vector extractor from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/ivector/final.ie
+LOG (VoskAPI:ComputeDerivedVars():ivector-extractor.cc:183) Computing derived variables for iVector extractor
+LOG (VoskAPI:ComputeDerivedVars():ivector-extractor.cc:204) Done.
+LOG (VoskAPI:ReadDataFiles():model.cc:279) Loading HCLG from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/HCLG.fst
+LOG (VoskAPI:ReadDataFiles():model.cc:297) Loading words from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/words.txt
+LOG (VoskAPI:ReadDataFiles():model.cc:308) Loading winfo /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/phones/word_boundary.int
+2025-11-09 15:12:25.616 | INFO     | 12986:139796857367488 | log:info:144 - Listening... (Ctrl+C for exit)
+2025-11-09 15:12:25.617 | INFO     | 12986:139796857367488 | log:info:144 - Device: pulse | STT=VoskUkPlugin
+2025-11-09 15:12:44.931 | INFO     | 12986:139796857367488 | log:info:144 - 
+Text: «відкрий обсидіан»
+2025-11-09 15:12:44.952 | INFO     | 12986:139796857367488 | log:info:144 - intent=app.open slots={'app': 'obsidian'} conf=0.6363636363636364
+2025-11-09 15:12:44.952 | INFO     | 12986:139796857367488 | log:info:144 - action: {'ok': True, 'launched': ['obsidian']}
+2025-11-09 15:12:44.952 | INFO     | 12986:139796857367488 | log:info:144 - reply: Відкриваю obsidian.
+2025-11-09 15:13:10.134 | INFO     | 12986:139796857367488 | log:info:144 - 
+Text: «пасіку»
+2025-11-09 15:13:10.137 | ERROR    | 12986:139796857367488 | log:error:146 - ERR: None
+2025-11-09 15:17:53.016 | INFO     | 14833:140491323206592 | log:info:144 - 🎙️  Jarvis is starting...
+['vosk_uk_v3']
+LOG (VoskAPI:ReadDataFiles():model.cc:213) Decoding params beam=13 max-active=7000 lattice-beam=6
+LOG (VoskAPI:ReadDataFiles():model.cc:216) Silence phones 1:2:3:4:5
+LOG (VoskAPI:RemoveOrphanNodes():nnet-nnet.cc:948) Removed 0 orphan nodes.
+LOG (VoskAPI:RemoveOrphanComponents():nnet-nnet.cc:847) Removing 0 orphan components.
+LOG (VoskAPI:ReadDataFiles():model.cc:248) Loading i-vector extractor from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/ivector/final.ie
+LOG (VoskAPI:ComputeDerivedVars():ivector-extractor.cc:183) Computing derived variables for iVector extractor
+LOG (VoskAPI:ComputeDerivedVars():ivector-extractor.cc:204) Done.
+LOG (VoskAPI:ReadDataFiles():model.cc:279) Loading HCLG from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/HCLG.fst
+LOG (VoskAPI:ReadDataFiles():model.cc:297) Loading words from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/words.txt
+LOG (VoskAPI:ReadDataFiles():model.cc:308) Loading winfo /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/phones/word_boundary.int
+2025-11-09 15:17:55.911 | INFO     | 14833:140491323206592 | log:info:144 - Listening... (Ctrl+C for exit)
+2025-11-09 15:17:55.912 | INFO     | 14833:140491323206592 | log:info:144 - Device: pulse | STT=VoskUkPlugin
+2025-11-09 15:18:49.724 | INFO     | 15919:139874181237696 | log:info:144 - 🎙️  Jarvis is starting...
+['vosk_uk_v3']
+LOG (VoskAPI:ReadDataFiles():model.cc:213) Decoding params beam=13 max-active=7000 lattice-beam=6
+LOG (VoskAPI:ReadDataFiles():model.cc:216) Silence phones 1:2:3:4:5
+LOG (VoskAPI:RemoveOrphanNodes():nnet-nnet.cc:948) Removed 0 orphan nodes.
+LOG (VoskAPI:RemoveOrphanComponents():nnet-nnet.cc:847) Removing 0 orphan components.
+LOG (VoskAPI:ReadDataFiles():model.cc:248) Loading i-vector extractor from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/ivector/final.ie
+LOG (VoskAPI:ComputeDerivedVars():ivector-extractor.cc:183) Computing derived variables for iVector extractor
+LOG (VoskAPI:ComputeDerivedVars():ivector-extractor.cc:204) Done.
+LOG (VoskAPI:ReadDataFiles():model.cc:279) Loading HCLG from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/HCLG.fst
+LOG (VoskAPI:ReadDataFiles():model.cc:297) Loading words from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/words.txt
+2025-11-09 15:21:31.909 | INFO     | 17089:139781422443456 | log:info:144 - 🎙️  Jarvis is starting...
+['vosk_uk_v3']
+LOG (VoskAPI:ReadDataFiles():model.cc:213) Decoding params beam=13 max-active=7000 lattice-beam=6
+LOG (VoskAPI:ReadDataFiles():model.cc:216) Silence phones 1:2:3:4:5
+LOG (VoskAPI:RemoveOrphanNodes():nnet-nnet.cc:948) Removed 0 orphan nodes.
+LOG (VoskAPI:RemoveOrphanComponents():nnet-nnet.cc:847) Removing 0 orphan components.
+LOG (VoskAPI:ReadDataFiles():model.cc:248) Loading i-vector extractor from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/ivector/final.ie
+LOG (VoskAPI:ComputeDerivedVars():ivector-extractor.cc:183) Computing derived variables for iVector extractor
+LOG (VoskAPI:ComputeDerivedVars():ivector-extractor.cc:204) Done.
+LOG (VoskAPI:ReadDataFiles():model.cc:279) Loading HCLG from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/HCLG.fst
+LOG (VoskAPI:ReadDataFiles():model.cc:297) Loading words from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/words.txt
+LOG (VoskAPI:ReadDataFiles():model.cc:308) Loading winfo /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/phones/word_boundary.int
+2025-11-09 15:21:35.689 | INFO     | 17089:139781422443456 | log:info:144 - Listening... (Ctrl+C for exit)
+2025-11-09 15:21:35.689 | INFO     | 17089:139781422443456 | log:info:144 - Device: pulse | STT=VoskUkPlugin
+2025-11-09 15:21:39.406 | INFO     | 17089:139781422443456 | log:info:144 - 
+Text: «відкритого грам»
+2025-11-09 15:21:39.421 | INFO     | 17089:139781422443456 | log:info:144 - intent=app.open slots={'app': 'Telegram'} conf=0.56
+2025-11-09 15:21:39.421 | INFO     | 17089:139781422443456 | log:info:144 - action: {'ok': True, 'launched': ['Telegram']}
+2025-11-09 15:21:39.421 | INFO     | 17089:139781422443456 | log:info:144 - reply: Відкриваю Telegram.
+2025-11-09 15:21:43.419 | INFO     | 17089:139781422443456 | log:info:144 - 
+Text: «закрита храм»
+2025-11-09 15:21:43.837 | INFO     | 17089:139781422443456 | log:info:144 - intent=app.close slots={'app': 'chromium'} conf=0.5714285714285714
+2025-11-09 15:21:43.838 | INFO     | 17089:139781422443456 | log:info:144 - action: {'ok': True, 'intent': 'app.close', 'value': 'chromium', 'matched_pids': [2134, 2140, 2142, 2146, 2147, 2149, 2174, 2180, 2192, 2318, 2330, 2405, 2918, 2940, 2956, 2994, 12733, 13789, 13809], 'terminated': [2134, 2140, 2142, 2146, 2147, 2149, 2174, 2180, 2192, 2318, 2330, 2405, 2918, 2940, 2956, 2994, 12733, 13789, 13809], 'killed': [], 'still_alive': [], 'used_window_close': False, 'scanned': 268}
+2025-11-09 15:21:43.838 | INFO     | 17089:139781422443456 | log:info:144 - reply: Готово.
+2025-11-09 15:21:47.337 | INFO     | 17089:139781422443456 | log:info:144 - 
+Text: «вимкни телеграм»
+2025-11-09 15:21:47.396 | INFO     | 17089:139781422443456 | log:info:144 - intent=app.close slots={'app': 'Telegram'} conf=0.6
+2025-11-09 15:21:47.396 | INFO     | 17089:139781422443456 | log:info:144 - action: {'ok': True, 'intent': 'app.close', 'value': 'Telegram', 'matched_pids': [12635, 17641], 'terminated': [12635, 17641], 'killed': [], 'still_alive': [], 'used_window_close': False, 'scanned': 250}
+2025-11-09 15:21:47.397 | INFO     | 17089:139781422443456 | log:info:144 - reply: Готово.
+2025-11-09 15:21:49.839 | INFO     | 17089:139781422443456 | log:info:144 - 
+Text: «того донбасі»
+2025-11-09 15:21:49.841 | ERROR    | 17089:139781422443456 | log:error:146 - ERR: no_intent
+2025-11-09 15:21:59.928 | INFO     | 17673:139906030382016 | log:info:144 - 🎙️  Jarvis is starting...
+['vosk_uk_v3']
+LOG (VoskAPI:ReadDataFiles():model.cc:213) Decoding params beam=13 max-active=7000 lattice-beam=6
+LOG (VoskAPI:ReadDataFiles():model.cc:216) Silence phones 1:2:3:4:5
+LOG (VoskAPI:RemoveOrphanNodes():nnet-nnet.cc:948) Removed 0 orphan nodes.
+LOG (VoskAPI:RemoveOrphanComponents():nnet-nnet.cc:847) Removing 0 orphan components.
+LOG (VoskAPI:ReadDataFiles():model.cc:248) Loading i-vector extractor from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/ivector/final.ie
+LOG (VoskAPI:ComputeDerivedVars():ivector-extractor.cc:183) Computing derived variables for iVector extractor
+LOG (VoskAPI:ComputeDerivedVars():ivector-extractor.cc:204) Done.
+LOG (VoskAPI:ReadDataFiles():model.cc:279) Loading HCLG from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/HCLG.fst
+LOG (VoskAPI:ReadDataFiles():model.cc:297) Loading words from /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/words.txt
+LOG (VoskAPI:ReadDataFiles():model.cc:308) Loading winfo /home/devlad/PISUN/SayGex/Utils for my pc/jarvis/assistant/audio/models/vosk-model-uk-v3/graph/phones/word_boundary.int
+2025-11-09 15:22:02.742 | INFO     | 17673:139906030382016 | log:info:144 - Listening... (Ctrl+C for exit)
+2025-11-09 15:22:02.742 | INFO     | 17673:139906030382016 | log:info:144 - Device: pulse | STT=VoskUkPlugin
+2025-11-09 15:22:08.118 | INFO     | 17673:139906030382016 | log:info:144 - 
+Text: «запустив обсидіан»
+2025-11-09 15:22:08.134 | INFO     | 17673:139906030382016 | log:info:144 - intent=app.open slots={'app': 'obsidian'} conf=0.5925925925925926
+2025-11-09 15:22:08.134 | INFO     | 17673:139906030382016 | log:info:144 - action: {'ok': True, 'launched': ['obsidian']}
+2025-11-09 15:22:08.135 | INFO     | 17673:139906030382016 | log:info:144 - reply: Відкриваю obsidian.
+Audio saved to /tmp/tmpfim7wv9h.wav
+2025-11-09 15:22:13.189 | INFO     | 17673:139906030382016 | log:info:144 - 
+Text: «акції»
+2025-11-09 15:22:13.191 | ERROR    | 17673:139906030382016 | log:error:146 - ERR: no_intent

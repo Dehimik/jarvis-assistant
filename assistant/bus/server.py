@@ -219,24 +219,32 @@ async def intents_parse(body: ParseIn):
 def get_status():
     return app.state.status
 
+from pydantic import BaseModel
+from typing import Optional
+from fastapi import HTTPException
+
+class TogglePatch(BaseModel):
+    online: Optional[bool] = None
+    listening: Optional[bool] = None
+    speaking: Optional[bool] = None
+
 @app.post("/api/status/toggle", response_model=Status)
 def toggle_status(patch: TogglePatch):
     st: Status = app.state.status
     print(f"[TOGGLE] patch={patch.dict()} BEFORE={st.dict()}")
 
-    # ONLINE: обробляємо і True, і False
     if patch.online is not None:
-        st.online = patch.online
+        st.online = bool(patch.online)
         if not st.online:
-            # вимикаємо все і зупиняємо слухання
             st.listening = False
             st.speaking = False
             app.state.jarvis.stop()
 
-    # LISTENING: вмикаємо/вимикаємо й керуємо JarvisRunner
     if patch.listening is not None:
         if patch.listening:
-            st.online = True
+            app.state.jarvis.stop()
+            st.speaking = False
+
             try:
                 s = read_settings().dict()
                 app.state.jarvis.start(
@@ -246,23 +254,47 @@ def toggle_status(patch: TogglePatch):
                     print_intents=True,
                     say_ok=False,
                 )
+                st.online = True
                 st.listening = True
             except Exception as e:
                 st.listening = False
                 st.speaking = False
-                print(f"[TOGGLE] start failed: {e!r}")
+                print(f"[TOGGLE] start listening failed: {e!r}")
                 raise HTTPException(status_code=500, detail=f"failed to start listening: {e}")
         else:
+            app.state.jarvis.stop()
             st.listening = False
             st.speaking = False
-            app.state.jarvis.stop()
 
-    # SPEAKING: тільки якщо online + listening
     if patch.speaking is not None:
-        st.speaking = bool(patch.speaking and st.online and st.listening)
+        if patch.speaking:
+            app.state.jarvis.stop()
+            st.listening = False
+
+            try:
+                s = read_settings().dict()
+                app.state.jarvis.start(
+                    plugins_dir="configs/plugins.d/voice",
+                    device=s.get("stt_device"),
+                    frame=512,
+                    print_intents=True,
+                    say_ok=True,
+                )
+                st.online = True
+                st.speaking = True
+            except Exception as e:
+                st.speaking = False
+                st.listening = False
+                print(f"[TOGGLE] start speaking failed: {e!r}")
+                raise HTTPException(status_code=500, detail=f"failed to start speaking: {e}")
+        else:
+            app.state.jarvis.stop()
+            st.speaking = False
+            st.listening = False
 
     print(f"[TOGGLE] AFTER={st.dict()}")
     return st
+
 
 # settings
 @app.get("/api/settings", response_model=Settings)

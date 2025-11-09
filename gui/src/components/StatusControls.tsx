@@ -5,66 +5,80 @@ import {useJarvisStore} from "@/store/store.ts";
 type Pending = 'online' | 'listening' | 'speaking' | null
 
 export default function StatusControls() {
-  const [status, setLocal] = useState<JarvisStatus | null>(null)
-  const [pending, setPending] = useState<Pending>(null)
-  const [err, setErr] = useState<string | null>(null)
+    const [status, setLocal] = useState<JarvisStatus | null>(null)
+    const [pending, setPending] = useState<Pending>(null)
+    const [err, setErr] = useState<string | null>(null)
 
-  useEffect(() => {
-    getStatus().then(setLocal).catch(e => setErr(String(e)))
-  }, [])
+    useEffect(() => {
+        getStatus().then(setLocal).catch(e => setErr(String(e)))
+    }, [])
 
-  const sync = async (patch: Partial<JarvisStatus>, key: Pending) => {
-  if (!status) return
-  setPending(key)
-  setErr(null)
+    const sync = async (patch: Partial<JarvisStatus>, key: Pending) => {
+        if (!status) return
+        setPending(key)
+        setErr(null)
+        try {
+            const res = await setStatus(patch)
+            setLocal(res)
+            useJarvisStore.setState({status: res})
+        } catch (e: any) {
+            setErr(e.message || String(e))
+        } finally {
+            setPending(null)
+        }
+    }
 
-  try {
-    const res = await setStatus(patch)   // API виклик
-    setLocal(res)                        // локальний стейт
-    useJarvisStore.setState({ status: res }) // Zustand глобальний
-  } catch (e: any) {
-    setErr(e.message || String(e))
-  } finally {
-    setPending(null)
-  }
-}
+    if (!status) return <div style={{opacity: .7}}>Loading status…</div>
 
-  if (!status) {
-    return <div style={{opacity:.7}}>Loading status…</div>
-  }
+    const disOnline = pending !== null
+    const disListening = pending !== null || status.speaking
+    const disSpeaking = pending !== null || status.listening
 
-  const disOnline = pending !== null
-  const disListening = pending !== null || !status.online
-  const disSpeaking = pending !== null || !status.online || !status.listening
+    return (
+        <div style={{display: 'grid', gap: 12, maxWidth: 520}}>
+            {err && <div style={{color: '#f87171', fontSize: 13}}>{err}</div>}
 
-  return (
-    <div style={{display:'grid', gap:12, maxWidth:520}}>
-      {err && <div style={{color:'#f87171', fontSize:13}}>{err}</div>}
+            <Row
+                label="Online"
+                value={status.online}
+                onToggle={() => sync({
+                    online: !status.online, ...(status.online ? {
+                        speaking: false,
+                        listening: false
+                    } : {})
+                }, 'online')}
+                disabled={disOnline}
+            />
 
-      <Row
-        label="Online"
-        value={status.online}
-        onToggle={() => sync({ online: !status.online, ...(status.online ? { speaking:false, listening:false } : {}) }, 'online')}
-        disabled={disOnline}
-      />
+            <Row
+                label="Listening"
+                hint={!status.online ? 'Enable Online first' : undefined}
+                value={status.listening}
+                onToggle={() => {
+                    if (!status.listening) {
+                        sync({listening: true}, 'listening')
+                    } else {
+                        sync({listening: false}, 'listening')
+                    }
+                }}
+                disabled={disListening}
+            />
 
-      <Row
-        label="Listening"
-        hint={!status.online ? 'Enable Online first' : undefined}
-        value={status.listening}
-        onToggle={() => sync({ listening: !status.listening }, 'listening')}
-        disabled={disListening}
-      />
-
-      <Row
-        label="Speaking"
-        hint={!status.online ? 'Enable Online first' : !status.listening ? 'Enable Listening first' : undefined}
-        value={status.speaking}
-        onToggle={() => sync({ speaking: !status.speaking }, 'speaking')}
-        disabled={disSpeaking}
-      />
-    </div>
-  )
+            <Row
+                label="Speaking"
+                hint={!status.online ? 'Enable Online first' : undefined}
+                value={status.speaking}
+                onToggle={() => {
+                    if (!status.speaking) {
+                        sync({speaking: true}, 'speaking')
+                    } else {
+                        sync({speaking: false}, 'speaking')
+                    }
+                }}
+                disabled={disSpeaking}
+            />
+        </div>
+    )
 }
 
 function Row({
@@ -84,7 +98,7 @@ function Row({
       </div>
       <button
         onClick={onToggle}
-        disabled={!!disabled}
+        disabled={disabled}
         style={{
           minWidth:96,
           padding:'8px 12px',
