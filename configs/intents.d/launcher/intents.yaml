@@ -10,12 +10,13 @@ intents:
       app:
         type: app_name
         synonyms:
-          chromium: ["google chrome", "хром", "chrome"]
+          chromium: ["google chrome", "хром", "браузер", "chrome"]
           https://youtube.com: ["ютуб", "youtube"]
           Telegram: ["telegram", "телеграм"]
           blender: ["blender", "блендер"]
           obsidian: ["obsidian", "обсидіан"]
           https://roblox.com: ["roblox", "роблокс"]
+          discord: ["діскорд"]
           https://www.youtube.com/watch?v=7D4qgR3TsRc: ["Україна понад усе", "Україна"]
           prismlauncher: ["майнкрафт", "майн", "minecraft"]
   app.close:
@@ -30,4 +31,5 @@ intents:
           Telegram: [ "telegram", "телеграм" ]
           blender: [ "blender", "блендер" ]
           obsidian: [ "obsidian", "обсидіан" ]
+          discord: [ "діскорд" ]
           prismlauncher: [ "майнкрафт", "майн", "minecraft" ]

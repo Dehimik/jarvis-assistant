@@ -40,6 +40,36 @@ export function connectLogsWS(): WebSocket {
   return ws
 }
 
+export async function getLogFilePath(): Promise<string> {
+  // Бекенд поверне нам об'єкт: { "path": "/full/path/to/jarvis.log" }
+  const { data } = await api.get<{ path: string }>('/api/log-path');
+  return data.path; // Повертаємо тільки сам шлях
+}
+
+export type IntentFilter = 'all' | 'app.open' | 'app.close';
+export type DaysFilter = 7 | 30 | 90 | 0; // 0 = весь час
+
+export type CommandLog = {
+  id: string; // Або number, залежно від вашої БД
+  created_at: string; // ISO 8601 string
+  raw_text: string;
+  intent: 'app.open' | 'app.close' | string; // 'app.open', 'app.close' або інші
+  slots: {
+    app?: string; // Додаток може бути не вказаний
+    [key: string]: any; // Інші можливі слоти
+  };
+  confidence: number; // 0.0 - 1.0
+};
+
+export async function getStatistics(intent: IntentFilter, days: DaysFilter): Promise<CommandLog[]> {
+  const { data } = await api.get<CommandLog[]>('/api/statistics', {
+    params: {
+      intent, // -> ?intent=all
+      days,   // -> &days=30
+    }
+  });
+  return data;
+}
 
 export type IntentFile = {
   name: string;

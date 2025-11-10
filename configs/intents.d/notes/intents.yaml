@@ -1,9 +1,0 @@
-intents:
-  note.add:
-    patterns:
-      - "замітка {text:text}"
-      - "додай замітку {text:text}"
-      - "note {text:text}"
-    slots:
-      text:
-        type: text

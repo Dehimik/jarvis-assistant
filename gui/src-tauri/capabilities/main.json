@@ -1,0 +1,8 @@
+{
+  "identifier": "main",
+  "description": "Main capability set",
+  "windows": ["main"],
+  "permissions": [
+    "shell:allow-open"
+  ]
+}

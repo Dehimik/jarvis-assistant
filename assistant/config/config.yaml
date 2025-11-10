@@ -1,7 +1,7 @@
 stt:
   plugin: vosk_uk_v3
   options:
-    model_path: "assistant/audio/models/vosk-model-uk-v3"
+    model_path: "assistant/audio/models/vosk-model-uk-v3-lgraph"
     sample_rate: 16000
 
 tts:

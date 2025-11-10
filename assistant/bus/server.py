@@ -1,15 +1,19 @@
 from __future__ import annotations
 
+import datetime
 import os
 import subprocess
 import sys
 import threading
 import time
 from contextlib import suppress
-from typing import Optional
+from enum import Enum
+from typing import Optional, List
 import json, shutil, yaml, asyncio
 
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect, UploadFile, File, HTTPException, Body
+import asyncpg
+from dotenv import load_dotenv
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, UploadFile, File, HTTPException, Body, Request, Query
 from pydantic import BaseModel
 from pathlib import Path
 
@@ -17,6 +21,8 @@ from starlette.middleware.cors import CORSMiddleware
 
 from assistant.nlu import NLU
 from assistant.plugins.manager import PluginManager
+
+load_dotenv()
 
 # paths
 ROOT = Path(__file__).resolve().parents[2]
@@ -130,6 +136,36 @@ class JarvisRunner:
             self._pump_thr = None
 
 # models
+class IntentFilter(str, Enum):
+    """ Валідація параметра 'intent' """
+    all = "all"
+    app_open = "app.open"
+    app_close = "app.close"
+
+class DaysFilter(int, Enum):
+    d7 = 7
+    d30 = 30
+    d90 = 90
+    all = 0
+
+class CommandLogSlots(BaseModel):
+    app: Optional[str] = None
+    # Додайте сюди інші поля, якщо вони є в 'slots'
+    class Config:
+        orm_mode = False
+
+class CommandLog(BaseModel):
+    id: int
+    created_at: datetime.datetime
+    raw_text: Optional[str] = None
+    intent: Optional[str] = None
+    slots: Optional[CommandLogSlots] = None # Pydantic розпарсить JSONB
+    confidence: Optional[float] = None
+
+    class Config:
+        orm_mode = False# Дозволяє Pydantic читати дані з об'єктів БД (напр., asyncpg.Record)
+        extra = "ignore"
+
 class ParseIn(BaseModel):
     text: str
 
@@ -186,6 +222,37 @@ class NewFileRequest(BaseModel):
     name: str
 
 # system / nlu
+@app.on_event("startup")
+async def startup():
+    # Завантажте DATABASE_URL з .env або конфігурації
+    dsn = os.environ.get("JARVIS_DB_DSN")
+
+    # --- FIX: asyncpg не розуміє діалект '+psycopg2' ---
+    if dsn and dsn.startswith("postgresql+psycopg2://"):
+        dsn = dsn.replace("postgresql+psycopg2://", "postgresql://", 1)
+
+    if not dsn:
+        print("[ERROR] DATABASE_URL is not set. Database will not be available.")
+        app.state.db = None
+    else:
+        try:
+            app.state.db = await asyncpg.create_pool(
+                dsn=dsn,
+                min_size=1,
+                max_size=10
+            )
+            print("[INFO] Database pool created successfully.")
+        except Exception as e:
+            print(f"[ERROR] Failed to create database pool: {e!r}")
+            app.state.db = None
+
+
+@app.on_event("shutdown")
+async def shutdown():
+    if app.state.db:
+        await app.state.db.close()
+        print("[INFO] Database pool closed.")
+
 @app.get("/health")
 def health():
     return {"ok": True}
@@ -317,6 +384,11 @@ def get_logs(tail: int = 1000):
         return {"lines": []}
     lines = LOG_FILE.read_text(errors="ignore").splitlines()[-tail:]
     return {"lines": lines}
+
+@app.get("/api/log-path")
+def get_log_path():
+    # LOG_FILE - це об'єкт Path, .resolve() гарантує абсолютний шлях
+    return {"path": str(LOG_FILE.resolve())}
 
 @app.websocket("/api/logs/stream")
 async def logs_stream(ws: WebSocket):
@@ -509,3 +581,89 @@ def list_intents():
     items.sort(key=lambda x: x['name'])
 
     return {"files": items}
+
+#database
+@app.get("/api/statistics", response_model=List[CommandLog])
+async def get_statistics(
+        request: Request,  # Потрібен для доступу до app.state.db
+        intent: IntentFilter = Query(IntentFilter.all, description="Filter by intent type"),
+        days: DaysFilter = Query(DaysFilter.d30, description="Filter by time period")
+):
+    """
+    Надає історію команд для сторінки аналітики.
+    """
+
+    # 1. Отримуємо пул з'єднань, який ми (припускаємо) створили при старті
+    db_pool = request.app.state.db
+    if not db_pool:
+        raise HTTPException(
+            status_code=500,
+            detail="Database connection is not configured on the server (app.state.db is missing)."
+        )
+
+    # 2. Базовий SQL-запит (використовуємо $1, $2 для безпечних параметрів)
+    query = """
+            SELECT id, created_at, raw_text, intent, slots, confidence
+            FROM command_history \
+            """
+
+    conditions = []
+    params = []  # Список для параметрів запиту
+
+    # 3. Додаємо NOT NULL фільтри за вашим запитом
+    conditions.append("raw_text IS NOT NULL")
+    conditions.append("intent IS NOT NULL")
+    conditions.append("slots IS NOT NULL")
+    conditions.append("confidence IS NOT NULL")
+
+    # 4. Динамічно додаємо фільтри
+
+    # Фільтр за датою
+    if days.value > 0:
+        params.append(datetime.timedelta(days=days.value))
+        # Використовуємо 'now() - $1::interval'
+        conditions.append(f"created_at >= (now() - ${len(params)}::interval)")
+
+    # Фільтр за інтентом
+    if intent.value != "all":
+        params.append(intent.value)
+        conditions.append(f"intent = ${len(params)}")
+
+    # 4. Збираємо запит
+    if conditions:
+        query += " WHERE " + " AND ".join(conditions)
+
+    # Завжди сортуємо, щоб показувати останні
+    query += " ORDER BY created_at DESC"
+    # Додамо ліміт, щоб не перевантажувати фронтенд
+    query += " LIMIT 500"
+
+    try:
+        records = await db_pool.fetch(query, *params)  # asyncpg.Record list
+
+        # Варіант A — повертати прості dict'и (найпростіший, рекомендований)
+        result: List[dict] = []
+        for r in records:
+            d = dict(r)  # asyncpg.Record -> dict
+            # Якщо slots зберігаються як JSON string, розпарсимо в dict
+            slots_value = d.get("slots")
+            if isinstance(slots_value, str):
+                try:
+                    d["slots"] = json.loads(slots_value)
+                except Exception:
+                    # якщо не JSON — залишаємо як є
+                    pass
+            result.append(d)
+
+        # (опція) швидке логування першого елементу для діагностики:
+        if result:
+            print("[DEBUG] /api/statistics first record:", result[0])
+
+        return result
+
+        # Альтернатива B — створити Pydantic-об'єкти на сервері:
+        # return [CommandLog(**dict(r)) for r in records]
+
+    except Exception as e:
+        print(f"[ERROR] /api/statistics query failed: {e!r}")
+        raise HTTPException(status_code=500, detail=f"Database query failed.")
