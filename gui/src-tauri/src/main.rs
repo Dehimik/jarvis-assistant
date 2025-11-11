@@ -38,6 +38,7 @@ fn kill_backend(app: &AppHandle) {
 
 fn main() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_shell::init())
         .setup(|app| {
             // стартуємо бекенд разом з GUI
             let child = start_backend();

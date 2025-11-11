@@ -4,20 +4,78 @@ from pathlib import Path
 import psutil
 from typing import List, Optional, Tuple, Dict, Any
 
+try:
+    # Отримуємо абсолютний шлях до *цього* файлу
+    CURRENT_FILE_PATH = Path(__file__).resolve()
+    # Піднімаємось на 3 рівні: src-tauri -> gui -> jarvis
+    PROJECT_ROOT = CURRENT_FILE_PATH.parent.parent.parent
+except NameError:
+    # Запасний варіант, якщо __file__ не визначено (напр., REPL)
+    # Це менш надійно, але краще, ніж нічого.
+    print("Warning: __file__ not defined, falling back to CWD.")
+    PROJECT_ROOT = Path.cwd().parent.parent # Припускаємо, що CWD це src-tauri
+
+# 2. Визначаємо папку зі скриптами відносно кореня
+PROJECT_SCRIPTS_DIR = PROJECT_ROOT / "configs" / "scripts"
+
+print(f"[Launcher] Корінь проекту: {PROJECT_ROOT}")
+print(f"[Launcher] Папка скриптів: {PROJECT_SCRIPTS_DIR}")
+
 # helpers for Launcher
 def _is_url(s: str) -> bool:
-    return bool(re.match(r"^(https?://|www\.)", s)) or ("." in s and " " not in s)
+    """
+    Перевіряє, чи є рядок URL.
+    Ця версія трохи суворіша, щоб не плутати 'file.sh' з 'domain.com'.
+    """
+    s = s.lower()
+    if s.startswith(("http://", "https://", "ftp://", "www.")):
+        return True
+
+    if (PROJECT_SCRIPTS_DIR / s).exists():
+        return False
+    if s.endswith((".sh", ".py")):
+        return False
+
+    if "." in s and " " not in s and not s.startswith(("./", "/")):
+        common_tlds = [".com", ".org", ".net", ".io", ".dev", ".app", ".page"]
+        if any(s.endswith(tld) for tld in common_tlds):
+            return True
+
+    return False
 
 def _is_cmd_available(cmd: List[str]) -> bool:
     exe = cmd[0]
     return (os.path.isabs(exe) and Path(exe).exists()) or shutil.which(exe) is not None
+
 
 def _resolve_exec(app: str) -> Tuple[Optional[List[str]], dict]:
     """Повертає (cmd, debug_info)"""
     dbg = {"strategy": None, "tried": []}
     app = app.strip()
 
-    # URL → xdg-open
+    possible_names = [app]
+    if not app.endswith((".sh", ".py")):
+        possible_names.append(f"{app}.sh")
+        possible_names.append(f"{app}.py")
+
+    dbg["tried"].append(f"project_scripts_dir: {PROJECT_SCRIPTS_DIR}")
+
+    for name in possible_names:
+        script_path = PROJECT_SCRIPTS_DIR / name
+
+        if script_path.exists():
+            dbg["strategy"] = "project_script"
+
+            if name.endswith(".py"):
+                python_exe = shutil.which("python3") or shutil.which("python")
+                if python_exe:
+                    return [python_exe, str(script_path.resolve())], dbg
+                else:
+                    dbg["error"] = "python_not_found_for_py_script"
+                    return None, dbg
+
+            return [str(script_path.resolve())], dbg
+
     if _is_url(app):
         dbg["strategy"] = "url"
         if shutil.which("xdg-open"):
@@ -27,6 +85,16 @@ def _resolve_exec(app: str) -> Tuple[Optional[List[str]], dict]:
     if shutil.which(app):
         dbg["strategy"] = "which"
         return [app], dbg
+
+    common_paths = [
+        f"/usr/bin/{app}",
+        f"/usr/local/bin/{app}",
+        f"{Path.home()}/.local/bin/{app}"
+    ]
+    for path in common_paths:
+        if Path(path).exists():
+            dbg["strategy"] = "common_path"
+            return [path], dbg
 
     return None, dbg
 

@@ -10,6 +10,9 @@
     "frontendDist": "dist"
   },
   "app": {
+    "security": {
+      "capabilities": ["main"]
+    },
     "windows": [
       {
         "title": "Jarvis Desktop",
@@ -18,5 +21,10 @@
         "resizable": true
       }
     ]
+  },
+  "plugins": {
+    "shell": {
+      "open": ".*"
+    }
   }
 }
